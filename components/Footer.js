@@ -3,110 +3,139 @@ import Image from "next/image";
 import config from "@/config";
 import logo from "@/app/icon.png";
 
-// Add the Footer to the bottom of your landing page and more.
-// The support link is connected to the config.js file. If there's no config.resend.supportEmail, the link won't be displayed.
-
 const Footer = () => {
   return (
-    <footer className="bg-base-200 border-t border-base-content/10">
-      <div className="max-w-7xl mx-auto px-8 py-24">
-        <div className=" flex lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-          <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
+    <footer className="bg-[#1a1a1a] text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12">
+          {/* Brand Column */}
+          <div className="md:col-span-1">
             <Link
-              href="/#"
-              aria-current="page"
-              className="flex gap-2 justify-center md:justify-start items-center"
+              href="/"
+              className="flex items-center gap-2 mb-4"
             >
               <Image
                 src={logo}
                 alt={`${config.appName} logo`}
                 priority={true}
-                className="w-6 h-6"
-                width={24}
-                height={24}
+                className="w-8 h-8"
+                width={32}
+                height={32}
               />
-              <strong className="font-extrabold tracking-tight text-base md:text-lg">
-                {config.appName}
-              </strong>
+              <span className="font-serif text-lg">{config.appName}</span>
             </Link>
 
-            <p className="mt-3 text-sm text-base-content/80">
-              {config.appDescription}
-            </p>
-            <p className="mt-3 text-sm text-base-content/60">
-              Copyright © {new Date().getFullYear()} - All rights reserved
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              Curated surprise boxes that help you build connections and rediscover the joy of being together.
             </p>
 
-            <a
-              href="https://shipfa.st/?ref=shipfast_badge"
-              title="Go to ShipFast"
-              target="_blank"
-              className="mt-4 inline-block cursor-pointer rounded bg-neutral px-2 py-1 text-sm text-neutral-content ring-1 ring-base-content/10 duration-200 hover:ring-neutral"
-            >
-              <div className="flex items-center gap-1">
-                <span className="opacity-90">Built with</span>
-                <span className="flex items-center gap-0.5 font-semibold tracking-tight">
-                  <svg
-                    className="size-5"
-                    viewBox="0 0 375 509"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M233.962 11.7151L233.954 11.7229L186.393 57.3942L186.392 57.3948C116.335 124.657 57.1377 202.349 10.9069 287.707L10.8624 287.789L10.8164 287.87C10.5281 288.38 10.3791 288.954 10.383 289.537C10.387 290.12 10.5438 290.693 10.839 291.198C11.1342 291.704 11.5582 292.125 12.0701 292.419C12.5819 292.713 13.1633 292.868 13.756 292.869H129.042H139.042V302.869V494.875V494.888C139.042 495.535 139.229 496.17 139.584 496.715L131.361 502.072L139.584 496.715C139.939 497.26 140.447 497.692 141.048 497.957C141.648 498.222 142.314 498.308 142.963 498.202C143.613 498.096 144.215 497.804 144.698 497.365L144.7 497.363L165.966 477.999L165.97 477.996C239.677 410.959 302.226 332.637 351.272 245.969L351.274 245.966L364.435 222.73L364.44 222.721L364.445 222.712C364.735 222.203 364.885 221.627 364.882 221.043C364.879 220.459 364.723 219.886 364.427 219.379C364.132 218.872 363.707 218.45 363.194 218.156C362.681 217.862 362.099 217.707 361.505 217.707H361.5H249.685H239.685V207.707V14.1248C239.685 13.47 239.492 12.8285 239.129 12.28M233.962 11.7151L239.129 12.28M233.962 11.7151C234.438 11.2571 235.04 10.9473 235.694 10.8267C236.349 10.7061 237.024 10.7805 237.635 11.0399C238.246 11.2993 238.765 11.7314 239.129 12.28M233.962 11.7151L247.465 6.75675L239.129 12.28"
-                      fill="#FFBE18"
-                      stroke="black"
-                      strokeWidth="20"
-                    />
-                  </svg>
-                  ShipFast
-                </span>
-              </div>
-            </a>
+            <p className="text-gray-500 text-xs">{config.shipping.message}</p>
           </div>
-          <div className="flex-grow flex flex-wrap justify-center -mb-10 md:mt-0 mt-10 text-center">
-            <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-              <div className="footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3">
-                LINKS
-              </div>
 
-              <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                {config.resend.supportEmail && (
+          {/* Shop Column */}
+          <div>
+            <h4 className="font-medium text-white text-sm mb-4">Shop</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/boxes/couples"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Couple&apos;s Edition
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/boxes/family"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Family Edition
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/boxes/girls-night"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Girls Night Edition
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/boxes/self-care"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Self Care Edition
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company Column */}
+          <div>
+            <h4 className="font-medium text-white text-sm mb-4">Company</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/about"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  About us
+                </Link>
+              </li>
+              {config.resend.supportEmail && (
+                <li>
                   <a
                     href={`mailto:${config.resend.supportEmail}`}
-                    target="_blank"
-                    className="link link-hover"
-                    aria-label="Contact Support"
+                    className="text-gray-400 hover:text-white transition-colors"
                   >
-                    Support
+                    Contact
                   </a>
-                )}
-                <Link href="/#pricing" className="link link-hover">
-                  Pricing
-                </Link>
-                <Link href="/blog" className="link link-hover">
-                  Blog
-                </Link>
-                <a href="/#" target="_blank" className="link link-hover">
-                  Affiliates
-                </a>
-              </div>
-            </div>
+                </li>
+              )}
+            </ul>
+          </div>
 
-            <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-              <div className="footer-title font-semibold text-base-content tracking-widest text-sm md:text-left mb-3">
-                LEGAL
-              </div>
-
-              <div className="flex flex-col justify-center items-center md:items-start gap-2 mb-10 text-sm">
-                <Link href="/tos" className="link link-hover">
-                  Terms of services
+          {/* Legal Column */}
+          <div>
+            <h4 className="font-medium text-white text-sm mb-4">Legal</h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/tos"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Terms of service
                 </Link>
-                <Link href="/privacy-policy" className="link link-hover">
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Privacy policy
                 </Link>
-              </div>
-            </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-center sm:text-left">
+          <p className="text-gray-500 text-xs sm:text-sm">
+            © {new Date().getFullYear()} {config.appName}. All rights reserved.
+          </p>
+          <div className="flex items-center gap-2 text-gray-500 text-xs sm:text-sm">
+            <span>Made with</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#c9a96e"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+            >
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <span>for connection</span>
           </div>
         </div>
       </div>

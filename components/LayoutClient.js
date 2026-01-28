@@ -7,6 +7,7 @@ import { Crisp } from "crisp-sdk-web";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import { Tooltip } from "react-tooltip";
+import EmailCapture from "@/components/EmailCapture";
 import config from "@/config";
 
 // Crisp customer chat support:
@@ -37,10 +38,7 @@ const CrispChat = () => {
 
       // (Optional) If onlyShowOnRoutes array is not empty in config.js file, Crisp will be hidden on the routes in the array.
       // Use <AppButtonSupport> instead to show it (user clicks on the button to show Crisp—it cleans the UI)
-      if (
-        config.crisp.onlyShowOnRoutes &&
-        !config.crisp.onlyShowOnRoutes?.includes(pathname)
-      ) {
+      if (config.crisp.onlyShowOnRoutes && !config.crisp.onlyShowOnRoutes?.includes(pathname)) {
         Crisp.chat.hide();
         Crisp.chat.onChatClosed(() => {
           Crisp.chat.hide();
@@ -68,7 +66,10 @@ const ClientLayout = ({ children }) => {
   return (
     <>
       {/* Show a progress bar at the top when navigating between pages */}
-      <NextTopLoader color={config.colors.main} showSpinner={false} />
+      <NextTopLoader
+        color={config.colors.main}
+        showSpinner={false}
+      />
 
       {/* Content inside app/page.js files  */}
       {children}
@@ -88,6 +89,12 @@ const ClientLayout = ({ children }) => {
 
       {/* Set Crisp customer chat support */}
       <CrispChat />
+
+      {/* Email capture popup - shows after 10 seconds or on exit intent */}
+      <EmailCapture
+        delay={10000}
+        exitIntent={true}
+      />
     </>
   );
 };

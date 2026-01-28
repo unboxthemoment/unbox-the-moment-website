@@ -4,73 +4,725 @@
 }
 
 @theme {
-  --font-display: "Satoshi", "sans-serif";
-  
+  --font-display: "Playfair Display", "serif";
+  --font-sans: "Inter", "sans-serif";
+
+  /* Unbox The Moment - Warm Cream/Black Premium Palette (Hims-inspired) */
+  --color-cream: #f5f0eb;
+  --color-cream-light: #faf8f5;
+  --color-cream-dark: #ebe4db;
+  --color-accent: #c9a96e;
+  --color-accent-light: #d4b87d;
+  --color-accent-dark: #b8962e;
+  --color-black: #1a1a1a;
+  --color-white: #ffffff;
+  --color-gray-50: #faf8f5;
+  --color-gray-100: #f5f0eb;
+  --color-gray-200: #ebe4db;
+  --color-gray-300: #d9d0c4;
+  --color-gray-400: #a89f94;
+  --color-gray-500: #7a7267;
+  --color-gray-600: #5c564d;
+  --color-gray-700: #3d3933;
+  --color-gray-800: #1a1a1a;
+  --color-gray-900: #0d0d0d;
+
+  /* Legacy gold colors for backwards compatibility */
+  --color-gold: #c9a96e;
+  --color-gold-light: #d4b87d;
+  --color-gold-dark: #b8962e;
+
+  /* DaisyUI Theme Overrides */
+  --color-primary: #1a1a1a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f5f0eb;
+  --color-secondary-content: #1a1a1a;
+  --color-accent: #c9a96e;
+  --color-accent-content: #1a1a1a;
+  --color-neutral: #1a1a1a;
+  --color-neutral-content: #ffffff;
+  --color-base-100: #faf8f5;
+  --color-base-200: #f5f0eb;
+  --color-base-300: #ebe4db;
+  --color-base-content: #1a1a1a;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+
+  /* Animations */
+  --animate-fadeIn: fadeIn 0.6s ease-out forwards;
+  --animate-fadeInUp: fadeInUp 0.6s ease-out forwards;
+  --animate-fadeInDown: fadeInDown 0.5s ease-out forwards;
+  --animate-slideInLeft: slideInLeft 0.5s ease-out forwards;
+  --animate-slideInRight: slideInRight 0.5s ease-out forwards;
+  --animate-scaleIn: scaleIn 0.4s ease-out forwards;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 2s ease-in-out infinite;
   --animate-shimmer: shimmer 3s ease-out infinite alternate;
-  --animate-opacity: opacity 0.25s ease-in-out;
-  --animate-appearFromRight: appearFromRight 300ms ease-in-out;
-  --animate-wiggle: wiggle 1.5s ease-in-out infinite;
-  --animate-popup: popup 0.25s ease-in-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-subtle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
 
   @keyframes shimmer {
-    0% { background-position: 0 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  @keyframes opacity {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-
-  @keyframes appearFromRight {
-    0% { opacity: 0.3; transform: translate(15%, 0px); }
-    100% { opacity: 1; transform: translate(0); }
-  }
-
-  @keyframes wiggle {
-    0%, 20%, 80%, 100% { transform: rotate(0deg); }
-    30%, 60% { transform: rotate(-2deg); }
-    40%, 70% { transform: rotate(2deg); }
-    45% { transform: rotate(-4deg); }
-    55% { transform: rotate(4deg); }
-  }
-
-  @keyframes popup {
-    0% { transform: scale(0.8); opacity: 0.8; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }
 
-html,
-body {
+/* Base styles */
+html {
   scroll-behavior: smooth !important;
 }
 
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-cream-light);
+  color: var(--color-black);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Better touch targets */
+  button,
+  a.btn,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Better text readability on small screens */
+  p,
+  li {
+    line-height: 1.6;
+  }
+
+  /* Improve form inputs on mobile */
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Premium Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+/* Accent italic text - the signature Hims style */
+.text-accent-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* Scroll margin for fixed header */
+section[id] {
+  scroll-margin-top: 100px;
+}
+
+/* ================================
+   Animation Utility Classes
+   ================================ */
+
+/* Fade animations */
+.animate-fade-in {
+  animation: var(--animate-fadeIn);
+}
+
+.animate-fade-in-up {
+  animation: var(--animate-fadeInUp);
+}
+
+.animate-fade-in-down {
+  animation: var(--animate-fadeInDown);
+}
+
+.animate-slide-in-left {
+  animation: var(--animate-slideInLeft);
+}
+
+.animate-slide-in-right {
+  animation: var(--animate-slideInRight);
+}
+
+.animate-scale-in {
+  animation: var(--animate-scaleIn);
+}
+
+.animate-float {
+  animation: var(--animate-float);
+}
+
+/* Staggered animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+/* Initial state for animated elements (before animation runs) */
+.animate-on-scroll {
+  opacity: 0;
+}
+
+.animate-on-scroll.is-visible {
+  animation: var(--animate-fadeInUp);
+}
+
+/* ================================
+   Button Styles - Hims-inspired
+   ================================ */
+
+/* Primary Button - Black pill-shaped */
+.btn-primary {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gray-700) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Button - Outlined pill */
+.btn-secondary {
+  background-color: transparent !important;
+  color: var(--color-black) !important;
+  border: 1.5px solid var(--color-black) !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+/* Legacy Gold Button - Updated to pill style */
+.btn-gold {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-gold:hover {
+  background-color: var(--color-gray-700) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-gold:disabled {
+  background-color: var(--color-gray-300) !important;
+  color: var(--color-gray-500) !important;
+  opacity: 0.7 !important;
+  transform: none !important;
+}
+
+/* Legacy Gold Outline Button - Updated */
+.btn-gold-outline {
+  background-color: transparent !important;
+  color: var(--color-black) !important;
+  border: 1.5px solid var(--color-black) !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-gold-outline:hover {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+/* Dark Button */
+.btn-dark {
+  background-color: var(--color-black) !important;
+  color: var(--color-white) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-dark:hover {
+  background-color: var(--color-gray-700) !important;
+}
+
+/* Light/Cream Button */
+.btn-light {
+  background-color: var(--color-white) !important;
+  color: var(--color-black) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 0.875rem 2rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-light:hover {
+  background-color: var(--color-cream) !important;
+}
+
+/* Default Button Styling */
+.btn {
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 500 !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* ================================
+   Card Styles - Hims-inspired
+   ================================ */
+
+/* Premium Card Style */
+.card-luxury {
+  background-color: var(--color-cream);
+  border: none;
+  border-radius: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.card-luxury:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Card with image hover effect */
+.card-luxury .card-image {
+  transition: transform 0.6s ease;
+}
+
+.card-luxury:hover .card-image {
+  transform: scale(1.03);
+}
+
+/* Cream Card - Standard warm background */
+.card-cream {
+  background-color: var(--color-cream);
+  border: none;
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+/* Feature Card Grid - Like Hims 2x2 layout */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Feature Card */
+.feature-card {
+  background-color: var(--color-cream);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================
+   Text & Color Utilities
+   ================================ */
+
+/* Accent Text */
+.text-gold,
+.text-accent {
+  color: var(--color-accent) !important;
+}
+
+/* Accent Italic - Signature style */
+.accent-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* Cream backgrounds */
+.bg-cream {
+  background-color: var(--color-cream) !important;
+}
+
+.bg-cream-light {
+  background-color: var(--color-cream-light) !important;
+}
+
+/* Accent Border */
+.border-gold,
+.border-accent {
+  border-color: var(--color-accent) !important;
+}
+
+/* Simple underline link effect */
+.link-underline {
+  position: relative;
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.link-underline:hover {
+  color: var(--color-accent);
+}
+
+/* ================================
+   Form Styles
+   ================================ */
+
+/* Form Inputs - Clean modern style */
+.input-luxury {
+  border: 1.5px solid var(--color-gray-300) !important;
+  background-color: var(--color-white) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.875rem 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.input-luxury:focus {
+  border-color: var(--color-black) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Checkbox - Gold accent with visible checkmark */
+.checkbox-gold {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+.checkbox-gold:checked {
+  background-color: #d4af37 !important;
+  border-color: #d4af37 !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3e%3c/svg%3e") !important;
+  background-size: 65% 65% !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Hide DaisyUI's default checkmark icons */
+.checkbox-gold:checked::before,
+.checkbox-gold:checked::after {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+}
+
+/* ================================
+   Link Styles
+   ================================ */
+
+/* Link Hover Effect */
+.link-gold {
+  color: var(--color-black);
+  transition: color 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link-gold:hover {
+  color: var(--color-accent);
+}
+
+/* Simple link */
+.link-simple {
+  color: var(--color-black);
+  transition: color 0.2s ease;
+}
+
+.link-simple:hover {
+  color: var(--color-gray-600);
+}
+
+/* Animated underline link */
+.link-animated {
+  position: relative;
+  display: inline-block;
+}
+
+.link-animated::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.2s ease;
+}
+
+.link-animated:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* ================================
+   Miscellaneous
+   ================================ */
+
+/* Section Divider */
+.divider-gold {
+  border-color: var(--color-gray-300);
+  opacity: 0.5;
+}
+
+/* Progress Bar */
 progress::-webkit-progress-value {
   transition: 0.6s width ease-out;
+  background-color: var(--color-black);
 }
 
-.btn-gradient {
-  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82) !important;
-  background-size: 300% 300% !important;
-  animation: var(--animate-shimmer) !important;
-  border: 0 !important;
-  border-color: transparent !important;
-  color: white !important;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+/* Selection Color */
+::selection {
+  background-color: var(--color-cream-dark);
+  color: var(--color-black);
 }
 
-.btn-gradient:hover {
-  filter: saturate(1.2) !important;
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease;
 }
 
-.btn-gradient:disabled {
-  background: rgb(107 114 128 / 0.3) !important;
-  color: rgb(156 163 175) !important;
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.btn {
-  text-transform: capitalize !important;
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* Page transition wrapper */
+.page-transition {
+  animation: var(--animate-fadeIn);
+}
+
+/* Floating elements */
+.floating {
+  animation: var(--animate-float);
+}
+
+/* Gradient text - subtle version */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section backgrounds */
+.section-cream {
+  background-color: var(--color-cream);
+}
+
+.section-white {
+  background-color: var(--color-white);
+}
+
+/* Container max-width */
+.container-tight {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* ================================
+   Skeleton Loader Animations
+   ================================ */
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+/* Skeleton pulse effect */
+.skeleton-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }

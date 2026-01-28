@@ -37,7 +37,7 @@ const features = [
   {
     title: "Payments",
     description:
-      "Create checkout sessions, handle webhooks to update user's account (subscriptions, one-time payments...) and tips to setup your account & reduce chargebacks",
+      "Create checkout sessions, handle webhooks to update user's account (one-time payments) and tips to setup your account & reduce chargebacks",
     type: "image",
     path: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
     alt: "A computer",
@@ -117,14 +117,8 @@ const Item = ({ feature, isOpen, setFeatureSelected }) => {
         }}
         aria-expanded={isOpen}
       >
-        <span className={`duration-100 ${isOpen ? "text-primary" : ""}`}>
-          {svg}
-        </span>
-        <span
-          className={`flex-1 text-base-content ${
-            isOpen ? "text-primary font-semibold" : ""
-          }`}
-        >
+        <span className={`duration-100 ${isOpen ? "text-primary" : ""}`}>{svg}</span>
+        <span className={`flex-1 text-base-content ${isOpen ? "text-primary font-semibold" : ""}`}>
           <h3 className="inline">{title}</h3>
         </span>
       </button>
@@ -132,11 +126,7 @@ const Item = ({ feature, isOpen, setFeatureSelected }) => {
       <div
         ref={accordion}
         className={`transition-all duration-300 ease-in-out text-base-content-secondary overflow-hidden`}
-        style={
-          isOpen
-            ? { maxHeight: accordion?.current?.scrollHeight, opacity: 1 }
-            : { maxHeight: 0, opacity: 0 }
-        }
+        style={isOpen ? { maxHeight: accordion?.current?.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: 0 }}
       >
         <div className="pb-5 leading-relaxed">{description}</div>
       </div>
@@ -166,7 +156,10 @@ const Media = ({ feature }) => {
         width={size.width}
         height={size.height}
       >
-        <source src={path} type={format} />
+        <source
+          src={path}
+          type={format}
+        />
       </video>
     );
   } else if (type === "image") {
@@ -215,7 +208,10 @@ const FeaturesAccordion = () => {
               ))}
             </ul>
 
-            <Media feature={features[featureSelected]} key={featureSelected} />
+            <Media
+              feature={features[featureSelected]}
+              key={featureSelected}
+            />
           </div>
         </div>
       </div>
