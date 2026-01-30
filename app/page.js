@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -6,7 +8,44 @@ import TrustBar from "@/components/TrustBar";
 import Testimonials3 from "@/components/Testimonials3";
 import HowItWorks from "@/components/HowItWorks";
 import config from "@/config";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+
+// Custom hook for scroll-triggered animations
+const useScrollAnimation = (threshold = 0.1, triggerOnce = true) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (triggerOnce) {
+            observer.unobserve(entry.target);
+          }
+        } else if (!triggerOnce) {
+          setIsVisible(false);
+        }
+      },
+      {
+        threshold,
+        rootMargin: '0px 0px -50px 0px', // Trigger slightly before element is fully visible
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [threshold, triggerOnce]);
+
+  return [ref, isVisible];
+};
 
 // Category card component - Hims-inspired style
 const CategoryCard = ({ category, index }) => {
@@ -48,18 +87,80 @@ const CategoryCard = ({ category, index }) => {
   );
 };
 
-// Feature card component - Hims-inspired grid card
+// Feature card component - Enhanced with scroll animations
 const FeatureCard = ({ icon, title, description, index }) => {
+  const [ref, isVisible] = useScrollAnimation(0.2);
+
   return (
     <div
-      className="bg-[#f5f0eb] rounded-2xl p-5 sm:p-6 md:p-8 animate-fade-in-up"
-      style={{ animationDelay: `${index * 150}ms` }}
+      ref={ref}
+      className={`bg-[#f5f0eb] rounded-2xl p-5 sm:p-6 md:p-8 transition-all duration-700 ease-out ${
+        isVisible
+          ? 'opacity-100 translate-y-0 scale-100'
+          : 'opacity-0 translate-y-8 scale-95'
+      }`}
+      style={{ 
+        transitionDelay: `${index * 150}ms`,
+        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(32px) scale(0.95)'
+      }}
     >
-      <div className="w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-6 flex items-center justify-center rounded-full bg-white">
+      <div 
+        className={`w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-6 flex items-center justify-center rounded-full bg-white transition-all duration-500 ease-out ${
+          isVisible ? 'opacity-100 rotate-0' : 'opacity-0 rotate-12'
+        }`}
+        style={{ transitionDelay: `${index * 150 + 200}ms` }}
+      >
         {icon}
       </div>
-      <h3 className="font-serif text-lg sm:text-xl text-[#1a1a1a] mb-2 sm:mb-3">{title}</h3>
-      <p className="text-[#5c564d] text-sm leading-relaxed">{description}</p>
+      <h3 
+        className={`font-serif text-lg sm:text-xl text-[#1a1a1a] mb-2 sm:mb-3 transition-all duration-500 ease-out ${
+          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+        }`}
+        style={{ transitionDelay: `${index * 150 + 300}ms` }}
+      >
+        {title}
+      </h3>
+      <p 
+        className={`text-[#5c564d] text-sm leading-relaxed transition-all duration-500 ease-out ${
+          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+        }`}
+        style={{ transitionDelay: `${index * 150 + 400}ms` }}
+      >
+        {description}
+      </p>
+    </div>
+  );
+};
+
+// Animated section title component
+const AnimatedSectionTitle = () => {
+  const [ref, isVisible] = useScrollAnimation(0.3);
+
+  return (
+    <div ref={ref} className="text-center mb-8 sm:mb-12">
+      <h2 
+        className={`font-serif text-2xl sm:text-3xl md:text-4xl text-[#1a1a1a] mb-3 sm:mb-4 px-4 transition-all duration-800 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-6'
+        }`}
+      >
+        <span 
+          className={`inline-block transition-all duration-700 ease-out ${
+            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+          }`}
+        >
+          Everything you need,
+        </span>{' '}
+        <span 
+          className={`font-serif italic text-[#c9a96e] inline-block transition-all duration-700 ease-out ${
+            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+          }`}
+          style={{ transitionDelay: '200ms' }}
+        >
+          delivered to your door
+        </span>
+      </h2>
     </div>
   );
 };
@@ -137,27 +238,32 @@ export default function Page() {
 
       <main className="pt-14 sm:pt-16 bg-[#faf8f5]">
         {/* Hero Section */}
-        <section className="relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-32">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#1a1a1a] leading-tight mb-4 sm:mb-6 animate-fade-in-up px-2">
+        <section className="relative overflow-hidden hero-background min-h-[80vh] flex items-center">
+          {/* Floating particles */}
+          <div className="hero-particles"></div>
+          {/* Subtle glow effect */}
+          <div className="hero-glow"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-32 w-full">
+            <div className="max-w-3xl mx-auto text-center hero-content-wrapper">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 sm:mb-6 animate-fade-in-up px-2 hero-title">
                 Curated surprise boxes,{" "}
-                <span className="font-serif italic text-[#c9a96e]">designed for connection</span>
+                <span className="font-serif italic hero-accent">designed for connection</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-[#5c564d] leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto animate-fade-in-up delay-200 px-4">
+              <p className="text-base sm:text-lg md:text-xl text-[#5c564d] leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto animate-fade-in-up delay-200 px-4 relative z-10">
                 It&apos;s hard to plan fun things with friends. We help you build connections and rediscover the purpose
                 of seeing people.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up delay-300 px-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up delay-300 px-4 relative z-10">
                 <Link
                   href="/boxes/couples"
-                  className="btn btn-gold px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto"
+                  className="btn btn-gold px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Shop boxes
                 </Link>
                 <Link
                   href="#how-it-works"
-                  className="btn btn-gold-outline px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto"
+                  className="btn btn-gold-outline px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto transform hover:scale-105 transition-all duration-300"
                 >
                   How it works
                 </Link>
@@ -169,11 +275,8 @@ export default function Page() {
         {/* Value Proposition - Hims-style 2x2 grid */}
         <section className="py-12 sm:py-16 lg:py-24">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#1a1a1a] mb-3 sm:mb-4 px-4">
-                Everything you need, <span className="font-serif italic text-[#c9a96e]">delivered to your door</span>
-              </h2>
-            </div>
+            <AnimatedSectionTitle />
+            
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               <FeatureCard
                 index={0}
