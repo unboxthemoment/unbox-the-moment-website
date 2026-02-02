@@ -113,28 +113,18 @@ export async function POST(req) {
           } else {
             console.log("Order created successfully:", productId);
 
-            // Send order confirmation email
-            if (customerEmail) {
-              console.log("Attempting to send order confirmation email to:", customerEmail);
-              try {
-                await sendOrderConfirmationEmail({
-                  email: customerEmail,
-                  order: insertedOrder || { ...orderData, id: stripeObject.id },
-                  product,
-                  shippingAddress,
-                });
-                console.log("✅ Order confirmation email sent successfully to:", customerEmail);
-              } catch (emailError) {
-                console.error("❌ Failed to send order confirmation email:", emailError);
-                console.error("Email error details:", {
-                  message: emailError.message,
-                  stack: emailError.stack,
-                  email: customerEmail,
-                });
-                // Don't throw - order is already created
-              }
-            } else {
-              console.warn("⚠️ No customer email found, skipping order confirmation email");
+            // Send new order notification to admin
+            try {
+              await sendAdminOrderNotification({
+                order: insertedOrder || { ...orderData, id: stripeObject.id },
+                product,
+                customerEmail,
+                shippingAddress,
+              });
+              console.log("✅ Admin notification email sent successfully");
+            } catch (adminEmailError) {
+              console.error("❌ Failed to send admin notification email:", adminEmailError);
+              // Don't throw - order is already created
             }
           }
         }
@@ -198,38 +188,37 @@ export async function POST(req) {
 }
 
 /**
- * Sends an order confirmation email to the customer
+ * Sends a new order notification email to the admin
  */
-async function sendOrderConfirmationEmail({ email, order, product, shippingAddress }) {
-  // In development/test mode, Resend requires domain verification or using test emails
-  // For testing without domain verification, use Resend's test email: delivered@resend.dev
-  // In production, you must verify your domain in Resend dashboard: https://resend.com/domains
-
-  // For testing: Use Resend test email if domain is not verified
-  // In production, use the actual customer email
-  const isDevelopment = process.env.NODE_ENV === "development";
-  const useTestEmail = isDevelopment && !process.env.RESEND_DOMAIN_VERIFIED;
-
-  // If domain not verified, send to test email but log the real email
-  const emailToSend = useTestEmail ? "delivered@resend.dev" : email;
-
-  if (useTestEmail) {
-    console.log(`⚠️ Domain not verified - sending test email to delivered@resend.dev instead of ${email}`);
-    console.log(`   To receive real emails, verify your domain at https://resend.com/domains`);
-  }
+async function sendAdminOrderNotification({ order, product, customerEmail, shippingAddress }) {
+  const adminEmail = "unboxthemoment1@gmail.com";
 
   const orderNumber = order.id || order.stripe_session_id?.slice(-12) || "N/A";
-  const shippingInfo = shippingAddress
-    ? `${shippingAddress.name}\n${shippingAddress.address?.line1}\n${shippingAddress.address?.city}, ${shippingAddress.address?.state} ${shippingAddress.address?.postal_code}`
-    : "Will be provided when shipped";
-
-  // Log the email being sent (for debugging)
-  console.log("Preparing order confirmation email:", {
-    to: emailToSend,
-    originalEmail: email,
-    orderNumber,
-    productName: product.name,
+  const orderDate = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
   });
+
+  const shippingInfo = shippingAddress
+    ? `${shippingAddress.name || "N/A"}
+${shippingAddress.address?.line1 || ""}
+${shippingAddress.address?.line2 || ""}
+${shippingAddress.address?.city || ""}, ${shippingAddress.address?.state || ""} ${
+        shippingAddress.address?.postal_code || ""
+      }
+${shippingAddress.address?.country || ""}`
+    : "No shipping address provided";
+
+  const preferencesInfo = order.preferences
+    ? `Vegan: ${order.preferences.vegan ? "Yes" : "No"}
+Allergies: ${order.preferences.allergies || "None"}
+Other Notes: ${order.preferences.otherNotes || "None"}`
+    : "No preferences specified";
 
   const html = `
     <!DOCTYPE html>
@@ -237,61 +226,72 @@ async function sendOrderConfirmationEmail({ email, order, product, shippingAddre
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Order Confirmation - Unbox The Moment</title>
+        <title>New Order - Unbox The Moment</title>
       </head>
       <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #D4AF37; font-size: 32px; margin: 0;">🎉 Thank You!</h1>
-          <p style="font-size: 18px; color: #666; margin-top: 10px;">Your order has been confirmed</p>
+        <div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #D4AF37, #F4D03F); padding: 20px; border-radius: 8px;">
+          <h1 style="color: #fff; font-size: 28px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">🎁 New Order Received!</h1>
+        </div>
+
+        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+          <p style="margin: 0; font-size: 16px; color: #1e40af;">
+            <strong>Order #${orderNumber}</strong><br>
+            <span style="font-size: 14px; color: #6b7280;">${orderDate}</span>
+          </p>
         </div>
 
         <div style="background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-          <h2 style="color: #333; font-size: 20px; margin-top: 0;">Order Details</h2>
+          <h2 style="color: #333; font-size: 18px; margin-top: 0; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Order Details</h2>
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="padding: 8px 0; color: #666;">Order Number:</td>
-              <td style="padding: 8px 0; font-weight: bold; text-align: right;">#${orderNumber}</td>
+              <td style="padding: 10px 0; color: #666; border-bottom: 1px solid #eee;">Product:</td>
+              <td style="padding: 10px 0; font-weight: bold; text-align: right; border-bottom: 1px solid #eee;">${
+                product.name
+              }</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">Product:</td>
-              <td style="padding: 8px 0; font-weight: bold; text-align: right;">${product.name} - ${
-    product.tierName
-  }</td>
+              <td style="padding: 10px 0; color: #666; border-bottom: 1px solid #eee;">Tier:</td>
+              <td style="padding: 10px 0; font-weight: bold; text-align: right; border-bottom: 1px solid #eee;">${
+                product.tierName || product.tier
+              }</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #666;">Price:</td>
-              <td style="padding: 8px 0; font-weight: bold; text-align: right;">$${product.price}</td>
+              <td style="padding: 10px 0; color: #666; border-bottom: 1px solid #eee;">Category:</td>
+              <td style="padding: 10px 0; font-weight: bold; text-align: right; border-bottom: 1px solid #eee;">${
+                product.category
+              }</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #666;">Price:</td>
+              <td style="padding: 10px 0; font-weight: bold; text-align: right; color: #16a34a; font-size: 18px;">$${
+                product.price
+              }</td>
             </tr>
           </table>
         </div>
 
-        <div style="background: #fff3cd; border-left: 4px solid #D4AF37; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
-          <h3 style="margin-top: 0; color: #856404;">What Happens Next?</h3>
-          <ol style="margin: 10px 0; padding-left: 20px; color: #856404;">
-            <li style="margin-bottom: 8px;">We're curating your surprise box with care</li>
-            <li style="margin-bottom: 8px;">You'll receive a shipping notification with tracking</li>
-            <li style="margin-bottom: 8px;">Your box will arrive in 3-5 business days</li>
-          </ol>
+        <div style="background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #333; font-size: 18px; margin-top: 0; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Customer Information</h2>
+          <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${customerEmail}" style="color: #3b82f6;">${customerEmail}</a></p>
         </div>
 
-        ${
-          shippingAddress
-            ? `
         <div style="background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-          <h3 style="color: #333; font-size: 18px; margin-top: 0;">Shipping Address</h3>
-          <p style="margin: 5px 0; color: #666;">${shippingInfo.replace(/\n/g, "<br>")}</p>
+          <h2 style="color: #333; font-size: 18px; margin-top: 0; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Shipping Address</h2>
+          <p style="margin: 10px 0; white-space: pre-line; color: #555;">${shippingInfo}</p>
         </div>
-        `
-            : ""
-        }
+
+        <div style="background: #fef3c7; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #92400e; font-size: 18px; margin-top: 0; border-bottom: 2px solid #f59e0b; padding-bottom: 10px;">Customer Preferences</h2>
+          <p style="margin: 10px 0; white-space: pre-line; color: #78350f;">${preferencesInfo}</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="http://localhost:3000/admin" style="display: inline-block; background: #1a1a1a; color: #fff; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 500;">View in Admin Dashboard</a>
+        </div>
 
         <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-          <p style="color: #666; font-size: 14px; margin: 10px 0;">
-            Questions? Reply to this email or contact us at 
-            <a href="mailto:support@unboxthemoment.com" style="color: #D4AF37; text-decoration: none;">support@unboxthemoment.com</a>
-          </p>
-          <p style="color: #999; font-size: 12px; margin-top: 20px;">
-            We're so excited to help you create an unforgettable moment! ✨
+          <p style="color: #999; font-size: 12px;">
+            This is an automated notification from Unbox The Moment
           </p>
         </div>
       </body>
@@ -299,62 +299,42 @@ async function sendOrderConfirmationEmail({ email, order, product, shippingAddre
   `;
 
   const text = `
-Thank You for Your Order!
+🎁 NEW ORDER RECEIVED!
 
-Order Number: #${orderNumber}
-Product: ${product.name} - ${product.tierName}
+Order #${orderNumber}
+Date: ${orderDate}
+
+ORDER DETAILS
+-------------
+Product: ${product.name}
+Tier: ${product.tierName || product.tier}
+Category: ${product.category}
 Price: $${product.price}
 
-What Happens Next?
-1. We're curating your surprise box with care
-2. You'll receive a shipping notification with tracking
-3. Your box will arrive in 3-5 business days
+CUSTOMER INFORMATION
+--------------------
+Email: ${customerEmail}
 
-${shippingAddress ? `Shipping Address:\n${shippingInfo}\n` : ""}
+SHIPPING ADDRESS
+----------------
+${shippingInfo}
 
-Questions? Contact us at support@unboxthemoment.com
+CUSTOMER PREFERENCES
+--------------------
+${preferencesInfo}
 
-We're so excited to help you create an unforgettable moment!
+---
+View in Admin Dashboard: http://localhost:3000/admin
   `;
 
-  console.log("Sending email via Resend:", {
-    to: emailToSend,
-    originalEmail: email,
-    from: configFile.resend.fromAdmin,
-    subject: `Order Confirmation - ${product.name}`,
+  console.log("Sending admin notification email to:", adminEmail);
+
+  const result = await sendEmail({
+    to: adminEmail,
+    subject: `🎁 New Order: ${product.name} - $${product.price}`,
+    html,
+    text,
   });
 
-  try {
-    const result = await sendEmail({
-      to: emailToSend,
-      subject: `Order Confirmation - ${product.name}`,
-      html,
-      text,
-    });
-    console.log("✅ Resend API response:", result);
-
-    if (useTestEmail) {
-      console.log(`📧 Test email sent successfully! Check delivered@resend.dev inbox.`);
-      console.log(`   Real customer email (${email}) will receive emails once domain is verified.`);
-    }
-
-    return result;
-  } catch (error) {
-    console.error("❌ Resend API error:", {
-      message: error.message,
-      name: error.name,
-      statusCode: error.statusCode,
-    });
-
-    // If domain verification error, provide helpful message
-    if (error.statusCode === 403 && error.message?.includes("domain is not verified")) {
-      console.error("\n💡 SOLUTION:");
-      console.error("   1. Go to https://resend.com/domains");
-      console.error("   2. Add and verify your domain: unboxthemoment.com");
-      console.error("   3. Or set RESEND_DOMAIN_VERIFIED=true in .env.local after verification");
-      console.error("   4. For testing, emails will go to delivered@resend.dev\n");
-    }
-
-    throw error;
-  }
+  return result;
 }
