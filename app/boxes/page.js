@@ -43,7 +43,7 @@ const CategoryCard = ({ category, index }) => {
           <p className="text-[#5c564d] text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 flex-grow">
             {category.description}
           </p>
-          <span className="inline-flex items-center text-[#1a1a1a] font-medium text-xs sm:text-sm border-b border-[#1a1a1a] pb-0.5 transition-all duration-200 group-hover:border-[#c9a96e] group-hover:text-[#c9a96e]">
+          <span className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-[#1a1a1a] text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 group-hover:bg-[#c9a96e]">
             Explore collection
           </span>
         </div>

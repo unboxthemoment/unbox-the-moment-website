@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/app/icon.png";
+import logo from "@/public/images/logo-cropped.png";
 import config from "@/config";
 
 // Box categories for the dropdown
@@ -107,13 +107,11 @@ const Header = () => {
             <Image
               src={logo}
               alt={`${config.appName} logo`}
-              className="w-7 h-7 sm:w-8 sm:h-8 transition-transform duration-300 group-hover:scale-105"
-              placeholder="blur"
+              className="h-8 sm:h-9 lg:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
               priority={true}
-              width={32}
-              height={32}
+              width={200}
+              height={40}
             />
-            <span className="font-serif text-base sm:text-lg text-[#1a1a1a]">{config.appName}</span>
           </Link>
         </div>
 
@@ -265,7 +263,7 @@ const Header = () => {
           {/* Mobile header */}
           <div className="flex items-center justify-between">
             <Link
-              className="flex items-center gap-1.5 sm:gap-2 shrink-0"
+              className="flex items-center shrink-0"
               title={`${config.appName} homepage`}
               href="/"
               onClick={() => setIsOpen(false)}
@@ -273,13 +271,11 @@ const Header = () => {
               <Image
                 src={logo}
                 alt={`${config.appName} logo`}
-                className="w-7 h-7 sm:w-8 sm:h-8"
-                placeholder="blur"
+                className="h-8 sm:h-9 w-auto"
                 priority={true}
-                width={32}
-                height={32}
+                width={180}
+                height={36}
               />
-              <span className="font-serif text-base sm:text-lg text-[#1a1a1a]">{config.appName}</span>
             </Link>
             <button
               type="button"
