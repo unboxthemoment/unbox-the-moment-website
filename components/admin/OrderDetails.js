@@ -2,25 +2,25 @@
 
 export default function OrderDetails({ order, onClose }) {
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const getStatusBadge = (status) => {
     const badges = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      completed: 'bg-green-100 text-green-800',
-      shipped: 'bg-blue-100 text-blue-800',
-      delivered: 'bg-purple-100 text-purple-800',
-      cancelled: 'bg-red-100 text-red-800'
+      pending: "bg-yellow-100 text-yellow-800",
+      completed: "bg-green-100 text-green-800",
+      shipped: "bg-blue-100 text-blue-800",
+      delivered: "bg-purple-100 text-purple-800",
+      cancelled: "bg-red-100 text-red-800",
     };
-    
-    return badges[status] || 'bg-gray-100 text-gray-800';
+
+    return badges[status] || "bg-gray-100 text-gray-800";
   };
 
   return (
@@ -29,9 +29,7 @@ export default function OrderDetails({ order, onClose }) {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">
-              Order #{order.id.slice(-8)}
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900">Order #{order.id.slice(-8)}</h3>
             <p className="text-gray-600">{formatDate(order.created_at)}</p>
           </div>
           <button
@@ -82,7 +80,7 @@ export default function OrderDetails({ order, onClose }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Category:</span>
-                  <span className="font-medium capitalize">{order.category.replace('-', ' ')}</span>
+                  <span className="font-medium capitalize">{order.category.replace("-", " ")}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tier:</span>
@@ -116,21 +114,16 @@ export default function OrderDetails({ order, onClose }) {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="font-semibold text-gray-900 mb-3">📦 Shipping Address</h4>
                 <div className="text-gray-700">
-                  {order.shipping_address.name && (
-                    <div className="font-medium">{order.shipping_address.name}</div>
-                  )}
+                  {order.shipping_address.name && <div className="font-medium">{order.shipping_address.name}</div>}
                   {order.shipping_address.address && (
                     <>
                       <div>{order.shipping_address.address.line1}</div>
-                      {order.shipping_address.address.line2 && (
-                        <div>{order.shipping_address.address.line2}</div>
-                      )}
+                      {order.shipping_address.address.line2 && <div>{order.shipping_address.address.line2}</div>}
                       <div>
-                        {order.shipping_address.address.city}, {order.shipping_address.address.state} {order.shipping_address.address.postal_code}
+                        {order.shipping_address.address.city}, {order.shipping_address.address.state}{" "}
+                        {order.shipping_address.address.postal_code}
                       </div>
-                      {order.shipping_address.address.country && (
-                        <div>{order.shipping_address.address.country}</div>
-                      )}
+                      {order.shipping_address.address.country && <div>{order.shipping_address.address.country}</div>}
                     </>
                   )}
                 </div>
@@ -145,8 +138,8 @@ export default function OrderDetails({ order, onClose }) {
                   {order.preferences.vegan !== undefined && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">Vegan:</span>
-                      <span className={`font-medium ${order.preferences.vegan ? 'text-green-600' : 'text-gray-500'}`}>
-                        {order.preferences.vegan ? 'Yes' : 'No'}
+                      <span className={`font-medium ${order.preferences.vegan ? "text-green-600" : "text-gray-500"}`}>
+                        {order.preferences.vegan ? "Yes" : "No"}
                       </span>
                     </div>
                   )}
@@ -175,24 +168,41 @@ export default function OrderDetails({ order, onClose }) {
               <h4 className="font-semibold text-green-900 mb-3">✅ Fulfillment Checklist</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                  />
                   <span className="text-green-800">Review customer preferences</span>
                 </div>
                 <div className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
-                  <span className="text-green-800">Prepare {order.product_name} ({order.tier})</span>
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                  />
+                  <span className="text-green-800">
+                    Prepare {order.product_name} ({order.tier})
+                  </span>
                 </div>
                 <div className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                  />
                   <span className="text-green-800">Check for dietary restrictions</span>
                 </div>
                 <div className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                  />
                   <span className="text-green-800">Package and label</span>
                 </div>
                 <div className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
-                  <span className="text-green-800">Update status to "shipped"</span>
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                  />
+                  <span className="text-green-800">Update status to &quot;shipped&quot;</span>
                 </div>
               </div>
             </div>

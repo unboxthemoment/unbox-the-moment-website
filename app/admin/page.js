@@ -1,27 +1,19 @@
 import { createClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
 import OrdersTable from "@/components/admin/OrdersTable";
 import OrderStats from "@/components/admin/OrderStats";
 
 export default async function AdminDashboard() {
   // Use service role key for admin operations
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-    {
-      auth: { persistSession: false },
-      realtime: { disabled: true }
-    }
-  );
+  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false },
+    realtime: { disabled: true },
+  });
 
   // Get all orders with latest first
-  const { data: orders, error } = await supabase
-    .from('orders')
-    .select('*')
-    .order('created_at', { ascending: false });
+  const { data: orders, error } = await supabase.from("orders").select("*").order("created_at", { ascending: false });
 
   if (error) {
-    console.error('Error fetching orders:', error);
+    console.error("Error fetching orders:", error);
     return (
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">

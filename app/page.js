@@ -29,7 +29,7 @@ const useScrollAnimation = (threshold = 0.1, triggerOnce = true) => {
       },
       {
         threshold,
-        rootMargin: '0px 0px -50px 0px', // Trigger slightly before element is fully visible
+        rootMargin: "0px 0px -50px 0px", // Trigger slightly before element is fully visible
       }
     );
 
@@ -95,34 +95,32 @@ const FeatureCard = ({ icon, title, description, index }) => {
     <div
       ref={ref}
       className={`bg-[#f5f0eb] rounded-2xl p-5 sm:p-6 md:p-8 transition-all duration-700 ease-out ${
-        isVisible
-          ? 'opacity-100 translate-y-0 scale-100'
-          : 'opacity-0 translate-y-8 scale-95'
+        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
       }`}
-      style={{ 
+      style={{
         transitionDelay: `${index * 150}ms`,
-        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(32px) scale(0.95)'
+        transform: isVisible ? "translateY(0) scale(1)" : "translateY(32px) scale(0.95)",
       }}
     >
-      <div 
+      <div
         className={`w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-6 flex items-center justify-center rounded-full bg-white transition-all duration-500 ease-out ${
-          isVisible ? 'opacity-100 rotate-0' : 'opacity-0 rotate-12'
+          isVisible ? "opacity-100 rotate-0" : "opacity-0 rotate-12"
         }`}
         style={{ transitionDelay: `${index * 150 + 200}ms` }}
       >
         {icon}
       </div>
-      <h3 
+      <h3
         className={`font-serif text-lg sm:text-xl text-[#1a1a1a] mb-2 sm:mb-3 transition-all duration-500 ease-out ${
-          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
         }`}
         style={{ transitionDelay: `${index * 150 + 300}ms` }}
       >
         {title}
       </h3>
-      <p 
+      <p
         className={`text-[#5c564d] text-sm leading-relaxed transition-all duration-500 ease-out ${
-          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
         }`}
         style={{ transitionDelay: `${index * 150 + 400}ms` }}
       >
@@ -137,26 +135,27 @@ const AnimatedSectionTitle = () => {
   const [ref, isVisible] = useScrollAnimation(0.3);
 
   return (
-    <div ref={ref} className="text-center mb-8 sm:mb-12">
-      <h2 
+    <div
+      ref={ref}
+      className="text-center mb-8 sm:mb-12"
+    >
+      <h2
         className={`font-serif text-2xl sm:text-3xl md:text-4xl text-[#1a1a1a] mb-3 sm:mb-4 px-4 transition-all duration-800 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-6'
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        <span 
+        <span
           className={`inline-block transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+            isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
           }`}
         >
           Everything you need,
-        </span>{' '}
-        <span 
+        </span>{" "}
+        <span
           className={`font-serif italic text-[#c9a96e] inline-block transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
           }`}
-          style={{ transitionDelay: '200ms' }}
+          style={{ transitionDelay: "200ms" }}
         >
           delivered to your door
         </span>
@@ -243,12 +242,11 @@ export default function Page() {
           <div className="hero-particles"></div>
           {/* Subtle glow effect */}
           <div className="hero-glow"></div>
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-32 w-full">
             <div className="max-w-3xl mx-auto text-center hero-content-wrapper">
               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 sm:mb-6 animate-fade-in-up px-2 hero-title">
-                Curated surprise boxes,{" "}
-                <span className="font-serif italic hero-accent">designed for connection</span>
+                Curated surprise boxes, <span className="font-serif italic hero-accent">designed for connection</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-[#5c564d] leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto animate-fade-in-up delay-200 px-4 relative z-10">
                 It&apos;s hard to plan fun things with friends. We help you build connections and rediscover the purpose
@@ -256,7 +254,7 @@ export default function Page() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up delay-300 px-4 relative z-10">
                 <Link
-                  href="/boxes/couples"
+                  href="/boxes"
                   className="btn btn-gold px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Shop boxes
@@ -276,7 +274,7 @@ export default function Page() {
         <section className="py-12 sm:py-16 lg:py-24">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <AnimatedSectionTitle />
-            
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               <FeatureCard
                 index={0}
@@ -423,7 +421,7 @@ export default function Page() {
               Stop planning. Start connecting. Your next unforgettable moment is just a box away.
             </p>
             <Link
-              href="/boxes/couples"
+              href="/boxes"
               className="btn btn-gold px-8 sm:px-10 py-3 sm:py-4 text-sm sm:text-base animate-fade-in-up delay-200 w-full sm:w-auto max-w-xs mx-auto"
             >
               Shop now

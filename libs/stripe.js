@@ -13,7 +13,33 @@ export const createCheckout = async ({
   productId,
   preferences,
 }) => {
+  // Validate priceId before proceeding
+  if (!priceId || typeof priceId !== "string" || priceId.trim() === "") {
+    throw new Error(`Invalid priceId: ${priceId}`);
+  }
+
+  if (!priceId.startsWith("price_")) {
+    throw new Error(`Invalid priceId format: ${priceId}. Must start with "price_"`);
+  }
+
+  // Validate URLs
+  if (!successUrl || typeof successUrl !== "string" || successUrl.trim() === "") {
+    throw new Error(`Invalid successUrl: ${successUrl}`);
+  }
+
+  if (!cancelUrl || typeof cancelUrl !== "string" || cancelUrl.trim() === "") {
+    throw new Error(`Invalid cancelUrl: ${cancelUrl}`);
+  }
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  console.log("Stripe createCheckout called with:", {
+    priceId,
+    successUrl,
+    cancelUrl,
+    hasUser: !!user,
+    hasProductId: !!productId,
+  });
 
   const extraParams = {};
 
@@ -53,33 +79,49 @@ export const createCheckout = async ({
   // when cards are enabled and the customer is on a supported device/browser
   const paymentMethodTypes = ["card"]; // Apple Pay is automatically included with card on supported devices
 
-  const stripeSession = await stripe.checkout.sessions.create({
+  // Prepare session parameters
+  const sessionParams = {
     mode: "payment",
     allow_promotion_codes: true,
-    client_reference_id: clientReferenceId,
     payment_method_types: paymentMethodTypes,
     line_items: [
       {
-        price: priceId,
+        price: priceId.trim(),
         quantity: 1,
       },
     ],
-    discounts: couponId
-      ? [
-          {
-            coupon: couponId,
-          },
-        ]
-      : [],
-    success_url: successUrl,
-    cancel_url: cancelUrl,
+    success_url: successUrl.trim(),
+    cancel_url: cancelUrl.trim(),
     metadata, // Store metadata on the session itself
     shipping_address_collection: {
       allowed_countries: ["US", "CA"], // Add more countries as needed
     },
     billing_address_collection: "required",
-    ...extraParams,
+  };
+
+  // Only add optional parameters if they have values
+  if (clientReferenceId) {
+    sessionParams.client_reference_id = clientReferenceId;
+  }
+
+  if (couponId) {
+    sessionParams.discounts = [
+      {
+        coupon: couponId,
+      },
+    ];
+  }
+
+  // Add extra params (customer info, etc.)
+  Object.assign(sessionParams, extraParams);
+
+  console.log("Creating Stripe session with params:", {
+    ...sessionParams,
+    line_items: sessionParams.line_items,
+    // Don't log sensitive data
   });
+
+  const stripeSession = await stripe.checkout.sessions.create(sessionParams);
 
   return stripeSession.url;
 };

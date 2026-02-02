@@ -26,7 +26,7 @@ const ButtonCheckout = ({
         body: JSON.stringify({
           priceId,
           mode: "payment",
-          successUrl: `${window.location.origin}/dashboard?success=true`,
+          successUrl: `${window.location.origin}/thank-you`,
           cancelUrl: window.location.href,
           productId,
           preferences,

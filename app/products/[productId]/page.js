@@ -145,6 +145,23 @@ const PreferencesForm = ({ preferences, setPreferences }) => {
 // Product details client component
 function ProductDetails({ productId }) {
   const product = getProductById(productId);
+
+  // Ensure priceId is properly resolved
+  // The config has: priceId: process.env.NODE_ENV === "development" ? "price_xxx" : "price_xxx_prod"
+  // In Next.js, process.env.NODE_ENV is replaced at build time, so the ternary should already be evaluated
+  // But we'll ensure it's a valid string
+  if (product && product.priceId) {
+    // Convert to string and ensure it's not empty
+    const resolvedPriceId = String(product.priceId).trim();
+
+    // If it's still a placeholder, log error
+    if (resolvedPriceId.includes("_dev") || resolvedPriceId.includes("_prod")) {
+      console.error("PriceId is still a placeholder:", resolvedPriceId);
+    }
+
+    // Replace the product's priceId with the resolved value
+    product.priceId = resolvedPriceId;
+  }
   const [preferences, setPreferences] = useState({
     vegan: false,
     allergies: "",
@@ -168,6 +185,64 @@ function ProductDetails({ productId }) {
     setIsLoading(true);
     setCheckoutError(null);
 
+    // Get the actual priceId value
+    // The priceId in config is: process.env.NODE_ENV === "development" ? "price_xxx" : "price_xxx_prod"
+    // In Next.js client components, process.env.NODE_ENV is replaced at build time
+    // So the ternary should already be evaluated to the correct value
+    let priceId = product.priceId;
+
+    // Debug logging
+    console.log("Checkout Debug:", {
+      productId: product.id,
+      priceId: priceId,
+      priceIdType: typeof priceId,
+      priceIdValue: String(priceId),
+      nodeEnv: typeof process !== "undefined" && process.env ? process.env.NODE_ENV : "unknown",
+      fullProduct: product,
+    });
+
+    // Validate priceId exists and is not empty
+    if (!priceId || (typeof priceId === "string" && priceId.trim() === "")) {
+      console.error("PriceId is missing, undefined, or empty:", {
+        product,
+        priceId,
+        priceIdType: typeof priceId,
+        priceIdLength: priceId?.length,
+      });
+      setCheckoutError("Product configuration error. Please refresh the page or contact support.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Convert to string and trim
+    priceId = String(priceId).trim();
+
+    // Check if it's empty after trimming
+    if (priceId === "") {
+      console.error("PriceId is empty after trimming:", product);
+      setCheckoutError("Product configuration error. Please refresh the page.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Check if priceId is still a placeholder (shouldn't happen, but just in case)
+    if (priceId.includes("_dev") || priceId.includes("_prod")) {
+      console.error("PriceId is still a placeholder:", priceId);
+      setCheckoutError("Product is not yet configured. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate priceId format (should start with "price_")
+    if (!priceId.startsWith("price_")) {
+      console.error("Invalid priceId format:", priceId, "Product:", product);
+      setCheckoutError("This product is not available for purchase. Please try again later.");
+      setIsLoading(false);
+      return;
+    }
+
+    console.log("Final priceId being sent:", priceId);
+
     try {
       const response = await fetch("/api/stripe/create-checkout", {
         method: "POST",
@@ -175,9 +250,9 @@ function ProductDetails({ productId }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          priceId: product.priceId,
+          priceId: priceId,
           mode: "payment",
-          successUrl: `${window.location.origin}/dashboard?success=true`,
+          successUrl: `${window.location.origin}/thank-you`,
           cancelUrl: window.location.href,
           productId: product.id,
           preferences,
@@ -274,8 +349,8 @@ function ProductDetails({ productId }) {
                   product.tier === "luxury"
                     ? "bg-black text-white"
                     : product.tier === "premium"
-                      ? "bg-[#D4AF37] text-black"
-                      : "bg-gray-100 text-gray-700"
+                    ? "bg-[#D4AF37] text-black"
+                    : "bg-gray-100 text-gray-700"
                 }`}
               >
                 {product.tierName}

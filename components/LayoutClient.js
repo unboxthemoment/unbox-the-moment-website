@@ -7,7 +7,6 @@ import { Crisp } from "crisp-sdk-web";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import { Tooltip } from "react-tooltip";
-import EmailCapture from "@/components/EmailCapture";
 import config from "@/config";
 
 // Crisp customer chat support:
@@ -89,12 +88,6 @@ const ClientLayout = ({ children }) => {
 
       {/* Set Crisp customer chat support */}
       <CrispChat />
-
-      {/* Email capture popup - shows after 10 seconds or on exit intent */}
-      <EmailCapture
-        delay={10000}
-        exitIntent={true}
-      />
     </>
   );
 };

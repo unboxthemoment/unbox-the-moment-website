@@ -1,11 +1,18 @@
 import { Resend } from "resend";
 import config from "@/config";
 
-if (!process.env.RESEND_API_KEY) {
-  throw new Error("RESEND_API_KEY is not set");
-}
+// Lazy initialization - only check when actually sending emails
+let resend = null;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  if (!resend) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY is not set");
+    }
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 /**
  * Sends an email using the provided parameters.
@@ -20,7 +27,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
  * @returns {Promise<Object>} A Promise that resolves with the email sending result data.
  */
 export const sendEmail = async ({ to, subject, text, html, replyTo }) => {
-  const { data, error } = await resend.emails.send({
+  const resendClient = getResend();
+  const { data, error } = await resendClient.emails.send({
     from: config.resend.fromAdmin,
     to,
     subject,

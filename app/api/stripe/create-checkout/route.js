@@ -51,23 +51,29 @@ export async function POST(req) {
   }
 
   // Validate required fields
-  if (!body.priceId) {
+  if (!body.priceId || body.priceId.trim() === "") {
+    console.error("Missing or empty priceId in request:", body);
     return NextResponse.json({ error: ERROR_MESSAGES.MISSING_PRICE_ID, code: "MISSING_PRICE_ID" }, { status: 400 });
+  }
+
+  // Validate priceId format
+  if (!body.priceId.startsWith("price_")) {
+    console.error("Invalid priceId format:", body.priceId);
+    return NextResponse.json({ error: ERROR_MESSAGES.STRIPE_INVALID_PRICE, code: "INVALID_PRICE_ID" }, { status: 400 });
   }
 
   if (!body.successUrl || !body.cancelUrl) {
     return NextResponse.json({ error: ERROR_MESSAGES.MISSING_URLS, code: "MISSING_URLS" }, { status: 400 });
   }
 
-  // Always use payment mode for one-time purchases
-  const mode = "payment";
+  // Always use payment mode for one-time purchases (mode is set in createCheckout function)
 
   // Check Stripe configuration
   if (!process.env.STRIPE_SECRET_KEY) {
     console.error("Stripe secret key is not configured");
     return NextResponse.json(
       { error: ERROR_MESSAGES.STRIPE_NOT_CONFIGURED, code: "STRIPE_NOT_CONFIGURED" },
-      { status: 503 },
+      { status: 503 }
     );
   }
 
@@ -95,8 +101,36 @@ export async function POST(req) {
 
     const { priceId, successUrl, cancelUrl, productId, preferences } = body;
 
-    const stripeSessionURL = await createCheckout({
+    // Additional validation and logging
+    console.log("Creating checkout session with:", {
       priceId,
+      successUrl,
+      cancelUrl,
+      productId,
+      hasPriceId: !!priceId,
+      priceIdLength: priceId?.length,
+      priceIdType: typeof priceId,
+      hasSuccessUrl: !!successUrl,
+      hasCancelUrl: !!cancelUrl,
+    });
+
+    if (!priceId || priceId.trim() === "") {
+      console.error("Empty priceId received:", body);
+      return NextResponse.json({ error: ERROR_MESSAGES.MISSING_PRICE_ID, code: "MISSING_PRICE_ID" }, { status: 400 });
+    }
+
+    if (!successUrl || successUrl.trim() === "") {
+      console.error("Empty successUrl received:", body);
+      return NextResponse.json({ error: ERROR_MESSAGES.MISSING_URLS, code: "MISSING_URLS" }, { status: 400 });
+    }
+
+    if (!cancelUrl || cancelUrl.trim() === "") {
+      console.error("Empty cancelUrl received:", body);
+      return NextResponse.json({ error: ERROR_MESSAGES.MISSING_URLS, code: "MISSING_URLS" }, { status: 400 });
+    }
+
+    const stripeSessionURL = await createCheckout({
+      priceId: priceId.trim(),
       mode: "payment",
       successUrl,
       cancelUrl,
@@ -134,7 +168,7 @@ export async function POST(req) {
         // Only include detailed message in development
         ...(process.env.NODE_ENV === "development" && { details: error?.message }),
       },
-      { status: statusCode },
+      { status: statusCode }
     );
   }
 }

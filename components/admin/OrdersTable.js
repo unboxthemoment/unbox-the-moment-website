@@ -6,32 +6,18 @@ import OrderDetails from "./OrderDetails";
 
 export default function OrdersTable({ orders }) {
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState("all");
 
   // Filter orders based on status
-  const filteredOrders = statusFilter === 'all' 
-    ? orders 
-    : orders.filter(order => order.status === statusFilter);
-
-  const getStatusBadge = (status) => {
-    const badges = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      completed: 'bg-green-100 text-green-800',
-      shipped: 'bg-blue-100 text-blue-800',
-      delivered: 'bg-purple-100 text-purple-800',
-      cancelled: 'bg-red-100 text-red-800'
-    };
-    
-    return badges[status] || 'bg-gray-100 text-gray-800';
-  };
+  const filteredOrders = statusFilter === "all" ? orders : orders.filter((order) => order.status === statusFilter);
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -68,21 +54,15 @@ export default function OrdersTable({ orders }) {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order
-              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Customer
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Product
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date
-              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
@@ -90,14 +70,13 @@ export default function OrdersTable({ orders }) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredOrders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
+              <tr
+                key={order.id}
+                className="hover:bg-gray-50"
+              >
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    #{order.id.slice(-8)}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    ${order.price}
-                  </div>
+                  <div className="text-sm font-medium text-gray-900">#{order.id.slice(-8)}</div>
+                  <div className="text-sm text-gray-500">${order.price}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{order.email}</div>
@@ -108,19 +87,17 @@ export default function OrdersTable({ orders }) {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{order.product_name}</div>
                   <div className="text-sm text-gray-500 capitalize">
-                    {order.category.replace('-', ' ')} • {order.tier}
+                    {order.category.replace("-", " ")} • {order.tier}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <StatusDropdown 
-                    orderId={order.id} 
+                  <StatusDropdown
+                    orderId={order.id}
                     currentStatus={order.status}
                     onStatusChange={() => window.location.reload()}
                   />
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {formatDate(order.created_at)}
-                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(order.created_at)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => setSelectedOrder(order)}
@@ -137,9 +114,9 @@ export default function OrdersTable({ orders }) {
 
       {/* Order Details Modal */}
       {selectedOrder && (
-        <OrderDetails 
-          order={selectedOrder} 
-          onClose={() => setSelectedOrder(null)} 
+        <OrderDetails
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
         />
       )}
     </div>

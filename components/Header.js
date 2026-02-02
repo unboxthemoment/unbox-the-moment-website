@@ -205,7 +205,7 @@ const Header = () => {
               {/* View All Link */}
               <div className="border-t border-[#f5f0eb] mt-2 pt-2 px-4">
                 <Link
-                  href="/boxes/couples"
+                  href="/boxes"
                   className="flex items-center justify-center gap-2 py-2 text-sm font-medium text-[#1a1a1a] hover:text-[#c9a96e] transition-colors duration-150"
                   onClick={() => setIsDropdownOpen(false)}
                 >
@@ -230,7 +230,7 @@ const Header = () => {
         {/* CTA on large screens */}
         <div className="hidden lg:flex lg:justify-end lg:flex-1 lg:gap-4 lg:items-center">
           <Link
-            href="/boxes/couples"
+            href="/boxes"
             className="btn btn-gold px-6 py-2.5 text-sm"
           >
             Shop now
@@ -325,7 +325,9 @@ const Header = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className={`w-5 h-5 transition-transform duration-300 ease-out ${isMobileBoxesOpen ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 transition-transform duration-300 ease-out ${
+                      isMobileBoxesOpen ? "rotate-180" : ""
+                    }`}
                   >
                     <path
                       strokeLinecap="round"
@@ -384,7 +386,7 @@ const Header = () => {
               style={{ transitionDelay: isOpen ? "300ms" : "0ms" }}
             >
               <Link
-                href="/boxes/couples"
+                href="/boxes"
                 className="btn btn-gold w-full text-center py-3 text-sm sm:text-base transition-transform duration-200 hover:scale-[1.02]"
                 onClick={() => setIsOpen(false)}
               >
