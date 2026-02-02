@@ -62,7 +62,7 @@ const config = {
       categoryName: "Couple's Edition",
       name: "Couple's Edition",
       price: 35,
-      priceId: process.env.NODE_ENV === "development" ? "price_couples_35_dev" : "price_couples_35_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDMDmT1D25TGdgoa4pLiY" : "price_1SwAnaDnfw7A5n47D4kF2O3F",
       tier: "essential",
       tierName: "Essential",
       description:
@@ -83,7 +83,7 @@ const config = {
       categoryName: "Couple's Edition",
       name: "Couple's Edition",
       price: 45,
-      priceId: process.env.NODE_ENV === "development" ? "price_couples_45_dev" : "price_couples_45_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDMDmT1D25TGdzFeElOvG" : "price_1SwAnaDnfw7A5n47UpsMOcmt",
       tier: "premium",
       tierName: "Premium",
       description:
@@ -106,7 +106,7 @@ const config = {
       categoryName: "Couple's Edition",
       name: "Couple's Edition",
       price: 60,
-      priceId: process.env.NODE_ENV === "development" ? "price_couples_60_dev" : "price_couples_60_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDNDmT1D25TGdSUINwspY" : "price_1SwAnbDnfw7A5n47EKhKDXSd",
       tier: "luxury",
       tierName: "Luxury",
       description:
@@ -130,7 +130,7 @@ const config = {
       categoryName: "Family Edition",
       name: "Family Edition",
       price: 35,
-      priceId: process.env.NODE_ENV === "development" ? "price_family_35_dev" : "price_family_35_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDNDmT1D25TGd3eNFM70H" : "price_1SwAnbDnfw7A5n475lN5AgMW",
       tier: "essential",
       tierName: "Essential",
       description:
@@ -151,7 +151,7 @@ const config = {
       categoryName: "Family Edition",
       name: "Family Edition",
       price: 45,
-      priceId: process.env.NODE_ENV === "development" ? "price_family_45_dev" : "price_family_45_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDODmT1D25TGd5GeCmgxP" : "price_1SwAnbDnfw7A5n47Qom60irT",
       tier: "premium",
       tierName: "Premium",
       description:
@@ -174,7 +174,7 @@ const config = {
       categoryName: "Family Edition",
       name: "Family Edition",
       price: 60,
-      priceId: process.env.NODE_ENV === "development" ? "price_family_60_dev" : "price_family_60_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDODmT1D25TGdL0i99WtE" : "price_1SwAncDnfw7A5n47ZBom63TB",
       tier: "luxury",
       tierName: "Luxury",
       description:
@@ -198,7 +198,7 @@ const config = {
       categoryName: "Girls Night Edition",
       name: "Girls Night Edition",
       price: 45,
-      priceId: process.env.NODE_ENV === "development" ? "price_girls_night_45_dev" : "price_girls_night_45_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDPDmT1D25TGdv930yyDC" : "price_1SwAncDnfw7A5n47Pqgx4ChE",
       tier: "essential",
       tierName: "Essential",
       description:
@@ -219,7 +219,7 @@ const config = {
       categoryName: "Girls Night Edition",
       name: "Girls Night Edition",
       price: 55,
-      priceId: process.env.NODE_ENV === "development" ? "price_girls_night_55_dev" : "price_girls_night_55_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDQDmT1D25TGdpWDiNHo4" : "price_1SwAndDnfw7A5n47vyRzjEUM",
       tier: "premium",
       tierName: "Premium",
       description:
@@ -242,7 +242,7 @@ const config = {
       categoryName: "Girls Night Edition",
       name: "Girls Night Edition",
       price: 65,
-      priceId: process.env.NODE_ENV === "development" ? "price_girls_night_65_dev" : "price_girls_night_65_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDQDmT1D25TGdP6OhceE1" : "price_1SwAndDnfw7A5n47JTnkUjns",
       tier: "luxury",
       tierName: "Luxury",
       description:
@@ -266,7 +266,7 @@ const config = {
       categoryName: "Self Care Edition",
       name: "Self Care Edition",
       price: 29,
-      priceId: process.env.NODE_ENV === "development" ? "price_self_care_29_dev" : "price_self_care_29_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDRDmT1D25TGdHo3gX3Vw" : "price_1SwAndDnfw7A5n47clmhIykk",
       tier: "essential",
       tierName: "Essential",
       description:
@@ -287,7 +287,7 @@ const config = {
       categoryName: "Self Care Edition",
       name: "Self Care Edition",
       price: 39,
-      priceId: process.env.NODE_ENV === "development" ? "price_self_care_39_dev" : "price_self_care_39_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDRDmT1D25TGdc9n52z2b" : "price_1SwAneDnfw7A5n47vOk0V0LI",
       tier: "premium",
       tierName: "Premium",
       description:
@@ -310,7 +310,7 @@ const config = {
       categoryName: "Self Care Edition",
       name: "Self Care Edition",
       price: 49,
-      priceId: process.env.NODE_ENV === "development" ? "price_self_care_49_dev" : "price_self_care_49_prod",
+      priceId: process.env.NODE_ENV === "development" ? "price_1SvrDSDmT1D25TGdyUeo62iN" : "price_1SwAneDnfw7A5n47voRLTJ0P",
       tier: "luxury",
       tierName: "Luxury",
       description:
