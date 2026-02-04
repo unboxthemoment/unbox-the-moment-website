@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import config from "@/config";
-import { sendWaitlistConfirmationEmail } from "@/libs/resend";
+import { sendWaitlistConfirmationEmail, sendWaitlistAdminNotification } from "@/libs/resend";
 
 // POST /api/waitlist - Add email to waitlist
 export async function POST(req) {
@@ -58,6 +58,15 @@ export async function POST(req) {
     } catch (emailError) {
       // Log error but don't fail the signup
       console.error(`Failed to send confirmation email to ${normalizedEmail}:`, emailError);
+    }
+
+    // Send admin notification email (don't block the response if it fails)
+    try {
+      await sendWaitlistAdminNotification(normalizedEmail);
+      console.log(`Waitlist admin notification email sent`);
+    } catch (adminEmailError) {
+      // Log error but don't fail the signup
+      console.error(`Failed to send admin notification email:`, adminEmailError);
     }
 
     return NextResponse.json({

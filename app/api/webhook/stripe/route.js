@@ -191,7 +191,7 @@ export async function POST(req) {
  * Sends a new order notification email to the admin
  */
 async function sendAdminOrderNotification({ order, product, customerEmail, shippingAddress }) {
-  const adminEmail = "unboxthemoment1@gmail.com";
+  const adminEmail = configFile.resend.customerServiceEmail || "unboxthemoment1@gmail.com";
 
   const orderNumber = order.id || order.stripe_session_id?.slice(-12) || "N/A";
   const orderDate = new Date().toLocaleString("en-US", {

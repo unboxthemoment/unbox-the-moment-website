@@ -34,7 +34,10 @@ const TOS = () => {
   return (
     <main className="max-w-xl mx-auto">
       <div className="p-5">
-        <Link href="/" className="btn btn-ghost">
+        <Link
+          href="/"
+          className="btn btn-ghost"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -49,47 +52,114 @@ const TOS = () => {
           </svg>
           Back
         </Link>
-        <h1 className="text-3xl font-extrabold pb-6">
-          Terms and Conditions for {config.appName}
-        </h1>
+        <h1 className="text-3xl font-extrabold pb-6">Terms and Conditions for {config.appName}</h1>
 
         <pre
           className="leading-relaxed whitespace-pre-wrap"
           style={{ fontFamily: "sans-serif" }}
         >
-          {`Last Updated: September 26, 2023
+          {`Last Updated: February 3, 2026
 
-Welcome to ShipFast!
+Welcome to Unbox The Moment!
 
-These Terms of Service ("Terms") govern your use of the ShipFast website at https://shipfa.st ("Website") and the services provided by ShipFast. By using our Website and services, you agree to these Terms.
+These Terms of Service ("Terms") govern your use of the Unbox The Moment website at https://unboxthemoment.com ("Website") and the services provided by Unbox The Moment ("we," "us," or "our"). By accessing or using our Website and services, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our Website or services.
 
-1. Description of ShipFast
+1. Description of Services
 
-ShipFast is a platform that offers a JavaScript code boilerplate to assist entrepreneurs in launching their startups more efficiently.
+Unbox The Moment is a curated surprise box service that delivers thoughtfully assembled boxes containing activities, treats, conversation starters, and other items designed to create meaningful moments and connections. We offer boxes for various occasions including:
 
-2. Ownership and Usage Rights
+- Couple's Edition: Curated experiences for couples
+- Family Edition: Activities and treats for families (2-5 people)
+- Girls Night Edition: Everything needed for memorable nights with friends (2-5 people)
+- Self Care Edition: Personal relaxation and wellness experiences
 
-When you purchase a package from ShipFast, you gain the right to download and use the code provided for creating applications. You own the code you create but do not have the right to resell it. We offer a full refund within 7 days of purchase, as specified in our refund policy.
+Each box is available in different tiers (Essential, Premium, Luxury) with varying contents and price points.
 
-3. User Data and Privacy
+2. Product Information
 
-We collect and store user data, including name, email, and payment information, as necessary to provide our services. For details on how we handle your data, please refer to our Privacy Policy at https://shipfa.st/privacy-policy.
+2.1 Product Descriptions
+We strive to provide accurate descriptions of our products. However, the exact contents of each surprise box may vary, as boxes are curated with care and may include seasonal or limited-availability items. We reserve the right to substitute items of equal or greater value.
 
-4. Non-Personal Data Collection
+2.2 Pricing
+All prices are listed in U.S. dollars and are subject to change without notice. Prices do not include applicable taxes or shipping fees, which will be calculated at checkout.
 
-We use web cookies to collect non-personal data for the purpose of improving our services and user experience.
+2.3 Availability
+Products are subject to availability. We reserve the right to limit quantities and to discontinue any product at any time.
 
-5. Governing Law
+3. Orders and Payment
 
-These Terms are governed by the laws of France.
+3.1 Order Acceptance
+Your order is an offer to purchase products from us. We reserve the right to accept or reject your order for any reason, including product availability, errors in pricing or product information, or suspected fraud.
 
-6. Updates to the Terms
+3.2 Payment
+Payment must be received before we ship your order. We accept major credit cards and other payment methods as displayed at checkout. All payments are processed securely through third-party payment processors.
 
-We may update these Terms from time to time. Users will be notified of any changes via email.
+3.3 Shipping
+We ship to addresses within the United States. Shipping times are estimates and not guaranteed. Your surprise box will ship soon after your order is placed. Estimated delivery times are provided at checkout but may vary due to factors beyond our control.
 
-For any questions or concerns regarding these Terms of Service, please contact us at marc@shipfa.st.
+4. Returns and Refunds
 
-Thank you for using ShipFast!`}
+4.1 Refund Policy
+We offer a full refund within 7 days of purchase if you are not satisfied with your order. To request a refund, please contact us at support@unboxthemoment.com with your order details.
+
+4.2 Return Conditions
+To be eligible for a refund, the product must be unused and in its original packaging. Refunds will be processed to the original payment method within 5-10 business days after we receive and inspect the returned item.
+
+4.3 Damaged or Defective Items
+If you receive a damaged or defective item, please contact us immediately at support@unboxthemoment.com with photos and your order number. We will work with you to resolve the issue, which may include replacement or refund.
+
+5. User Accounts
+
+5.1 Account Creation
+You may be required to create an account to place orders. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.
+
+5.2 Account Information
+You agree to provide accurate, current, and complete information when creating an account or placing an order. You must promptly update your account information if it changes.
+
+6. User Conduct
+
+You agree not to:
+- Use our Website for any unlawful purpose
+- Attempt to gain unauthorized access to our systems
+- Interfere with or disrupt our Website or servers
+- Use automated systems to access our Website without permission
+- Copy, reproduce, or resell our products or content without authorization
+
+7. Intellectual Property
+
+All content on our Website, including text, graphics, logos, images, and software, is the property of Unbox The Moment or its licensors and is protected by copyright and other intellectual property laws. You may not use our content without our express written permission.
+
+8. User Data and Privacy
+
+We collect and store user data, including name, email, payment information, and shipping addresses, as necessary to provide our services. For details on how we handle your data, please refer to our Privacy Policy at https://unboxthemoment.com/privacy-policy.
+
+9. Non-Personal Data Collection
+
+We use web cookies and similar technologies to collect non-personal data for the purpose of improving our services and user experience, analyzing trends, and personalizing content.
+
+10. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, UNBOX THE MOMENT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES RESULTING FROM YOUR USE OF OUR WEBSITE OR PRODUCTS.
+
+11. Disclaimer of Warranties
+
+OUR WEBSITE AND PRODUCTS ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+12. Governing Law
+
+These Terms are governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions. Any disputes arising from these Terms or your use of our Website shall be resolved in the courts of the United States.
+
+13. Changes to Terms
+
+We may update these Terms from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. Any updates will be posted on this page with an updated "Last Updated" date. We may also notify you of significant changes via email. Your continued use of our Website after such changes constitutes acceptance of the updated Terms.
+
+14. Contact Information
+
+If you have any questions or concerns regarding these Terms of Service, please contact us at:
+
+Email: support@unboxthemoment.com
+
+Thank you for choosing Unbox The Moment!`}
         </pre>
       </div>
     </main>

@@ -248,3 +248,83 @@ The Unbox The Moment Team
     `.trim(),
   });
 };
+
+/**
+ * Sends an admin notification email when someone joins the waitlist.
+ *
+ * @async
+ * @param {string} email - The email address of the person who joined the waitlist.
+ * @returns {Promise<Object>} A Promise that resolves with the email sending result data.
+ */
+export const sendWaitlistAdminNotification = async (email) => {
+  const adminEmail = config.resend.customerServiceEmail || "unboxthemoment1@gmail.com";
+  const signupDate = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Waitlist Signup - Unbox The Moment</title>
+      </head>
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #D4AF37, #F4D03F); padding: 20px; border-radius: 8px;">
+          <h1 style="color: #fff; font-size: 28px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">New Waitlist Signup!</h1>
+        </div>
+
+        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+          <p style="margin: 0; font-size: 16px; color: #1e40af;">
+            <strong>New signup received</strong><br>
+            <span style="font-size: 14px; color: #6b7280;">${signupDate}</span>
+          </p>
+        </div>
+
+        <div style="background: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+          <h2 style="color: #333; font-size: 18px; margin-top: 0; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Signup Details</h2>
+          <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #3b82f6;">${email}</a></p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="https://${config.domainName}/admin/waitlist" style="display: inline-block; background: #1a1a1a; color: #fff; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 500;">View Waitlist</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+          <p style="color: #999; font-size: 12px;">
+            This is an automated notification from Unbox The Moment
+          </p>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const text = `
+NEW WAITLIST SIGNUP!
+
+Date: ${signupDate}
+
+SIGNUP DETAILS
+--------------
+Email: ${email}
+
+---
+View Waitlist: https://${config.domainName}/admin/waitlist
+  `;
+
+  console.log("Sending waitlist admin notification email to:", adminEmail);
+
+  return sendEmail({
+    to: adminEmail,
+    subject: `New Waitlist Signup: ${email}`,
+    html,
+    text,
+  });
+};
