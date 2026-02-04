@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-// Email capture popup modal with discount offer
+// Email capture popup modal for community signups
 const EmailCapture = ({
   delay = 5000, // Time in ms before showing popup
   exitIntent = true, // Show on exit intent
@@ -142,8 +142,8 @@ const EmailCapture = ({
               />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Get 10% Off Your First Box</h2>
-          <p className="text-white/90 text-sm">Join our community and receive exclusive offers</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Stay in the Loop</h2>
+          <p className="text-white/90 text-sm">Join our community for updates and new releases</p>
         </div>
 
         {/* Content */}
@@ -165,7 +165,7 @@ const EmailCapture = ({
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">You&apos;re In!</h3>
-              <p className="text-gray-600">Check your email for your 10% discount code.</p>
+              <p className="text-gray-600">We&apos;ll keep you updated on new releases.</p>
             </div>
           ) : (
             <>
@@ -199,7 +199,7 @@ const EmailCapture = ({
                   disabled={isSubmitting}
                   className="btn btn-gold w-full py-3 text-base"
                 >
-                  {isSubmitting ? <span className="loading loading-spinner loading-sm"></span> : "Get My 10% Off"}
+                  {isSubmitting ? <span className="loading loading-spinner loading-sm"></span> : "Join the Community"}
                 </button>
               </form>
 
@@ -207,11 +207,11 @@ const EmailCapture = ({
 
               {/* Benefits */}
               <div className="mt-6 pt-6 border-t border-gray-100">
-                <p className="text-sm font-medium text-gray-900 mb-3">Subscribers also get:</p>
+                <p className="text-sm font-medium text-gray-900 mb-3">Subscribers get:</p>
                 <ul className="space-y-2">
                   {[
-                    "Early access to new boxes",
-                    "Exclusive subscriber-only deals",
+                    "First to know about new boxes",
+                    "Behind-the-scenes updates",
                     "Tips for creating memorable moments",
                   ].map((benefit, idx) => (
                     <li

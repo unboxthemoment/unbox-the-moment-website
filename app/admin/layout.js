@@ -6,19 +6,23 @@ export default function AdminLayout({ children }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">
-                🎁 Unbox The Moment Admin
-              </h1>
+              <h1 className="text-xl font-bold text-gray-900">Unbox The Moment Admin</h1>
             </div>
             <nav className="flex space-x-4">
-              <a 
-                href="/admin" 
+              <a
+                href="/admin"
                 className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
-                Dashboard
+                Orders
               </a>
-              <a 
-                href="/" 
+              <a
+                href="/admin/waitlist"
+                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Waitlist
+              </a>
+              <a
+                href="/"
                 className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 target="_blank"
               >
@@ -30,9 +34,7 @@ export default function AdminLayout({ children }) {
       </header>
 
       {/* Main Content */}
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 }

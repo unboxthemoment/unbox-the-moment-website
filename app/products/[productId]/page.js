@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustBar, { ShippingBanner } from "@/components/TrustBar";
 import RelatedProducts from "@/components/RelatedProducts";
+import WaitlistSignup from "@/components/WaitlistSignup";
 import config, { getProductById, getProductsByCategory, getCategoryBySlug } from "@/config";
 
 // Preferences form component with gift message option
@@ -373,14 +374,16 @@ function ProductDetails({ productId }) {
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{product.description}</p>
             </div>
 
-            {/* Preferences Form */}
-            <PreferencesForm
-              preferences={preferences}
-              setPreferences={setPreferences}
-            />
+            {/* Preferences Form - only show when checkout is available */}
+            {!config.waitlist?.isActive && (
+              <PreferencesForm
+                preferences={preferences}
+                setPreferences={setPreferences}
+              />
+            )}
 
-            {/* Checkout Error Message */}
-            {checkoutError && (
+            {/* Checkout Error Message - only show when checkout is available */}
+            {!config.waitlist?.isActive && checkoutError && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                 <div className="flex items-start gap-3">
                   <svg
@@ -410,18 +413,28 @@ function ProductDetails({ productId }) {
               </div>
             )}
 
-            {/* Checkout Button */}
-            <button
-              onClick={handleCheckout}
-              disabled={isLoading}
-              className="btn btn-gold w-full py-3 sm:py-4 text-sm sm:text-base mb-4"
-            >
-              {isLoading ? (
-                <span className="loading loading-spinner loading-sm"></span>
-              ) : (
-                <>Buy Now - ${product.price}</>
-              )}
-            </button>
+            {/* Checkout Button or Waitlist Signup */}
+            {config.waitlist?.isActive ? (
+              <div className="mb-4">
+                <WaitlistSignup
+                  buttonClassName="btn btn-gold w-full py-3 sm:py-4 text-sm sm:text-base"
+                  showMessage={true}
+                  compact={false}
+                />
+              </div>
+            ) : (
+              <button
+                onClick={handleCheckout}
+                disabled={isLoading}
+                className="btn btn-gold w-full py-3 sm:py-4 text-sm sm:text-base mb-4"
+              >
+                {isLoading ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  <>Buy Now - ${product.price}</>
+                )}
+              </button>
+            )}
 
             {/* Trust Badges - Compact */}
             <div className="mb-6">

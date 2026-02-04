@@ -41,7 +41,7 @@ const TrustBar = ({ variant = "default" }) => {
         </svg>
       ),
       title: "Fast delivery",
-      description: "Ships within 3-5 business days",
+      description: "Ships soon after order",
     },
   ];
 
@@ -128,9 +128,7 @@ export const ShippingBanner = () => {
         <div>
           <h4 className="font-medium text-sm text-[#1a1a1a] mb-2">Shipping information</h4>
           <ul className="text-xs text-[#5c564d] space-y-1">
-            <li>Standard delivery: 3-5 business days</li>
-            <li>Ships via USPS Priority Mail</li>
-            <li>Tracking number provided via email</li>
+            <li>Standard shipping available</li>
           </ul>
         </div>
       </div>

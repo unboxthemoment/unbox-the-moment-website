@@ -44,3 +44,207 @@ export const sendEmail = async ({ to, subject, text, html, replyTo }) => {
 
   return data;
 };
+
+/**
+ * Sends a confirmation email when someone joins the waitlist.
+ *
+ * @async
+ * @param {string} email - The recipient's email address.
+ * @returns {Promise<Object>} A Promise that resolves with the email sending result data.
+ */
+export const sendWaitlistConfirmationEmail = async (email) => {
+  const siteUrl = `https://${config.domainName}`;
+
+  return sendEmail({
+    to: email,
+    subject: "You're on the list! Welcome to Unbox The Moment",
+    text: `
+You're on the waitlist!
+
+Thank you for signing up for Unbox The Moment. We're working hard to bring you curated surprise boxes designed for meaningful connections.
+
+You'll be the first to know when we launch.
+
+In the meantime, learn more about us at ${siteUrl}
+
+We can't wait to help you create unforgettable moments!
+
+Best,
+The Unbox The Moment Team
+    `.trim(),
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're on the list!</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #faf8f5;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #D4AF37 0%, #B8962E 100%); padding: 40px 40px; text-align: center;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">
+                You're on the list!
+              </h1>
+              <p style="margin: 10px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">
+                Thank you for joining our waitlist
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <p style="margin: 0 0 20px; color: #1a1a1a; font-size: 16px; line-height: 1.6;">
+                Thank you for signing up for <strong>Unbox The Moment</strong>!
+              </p>
+              
+              <p style="margin: 0 0 20px; color: #5c564d; font-size: 16px; line-height: 1.6;">
+                We're working hard to bring you curated surprise boxes designed for meaningful connections with the people you love.
+              </p>
+              
+              <!-- What to expect box -->
+              <table role="presentation" style="width: 100%; background-color: #f5f0eb; border-radius: 12px; margin: 0 0 20px;">
+                <tr>
+                  <td style="padding: 24px; text-align: center;">
+                    <p style="margin: 0; color: #5c564d; font-size: 15px; line-height: 1.6;">
+                      You'll be the first to know when we launch.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin: 0; color: #5c564d; font-size: 16px; line-height: 1.6;">
+                We can't wait to help you create unforgettable moments!
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f5f0eb; padding: 30px 40px; text-align: center;">
+              <p style="margin: 0 0 10px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
+                Unbox The Moment
+              </p>
+              <p style="margin: 0; color: #5c564d; font-size: 14px;">
+                Curated surprise boxes for meaningful connections
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `.trim(),
+  });
+};
+
+/**
+ * Sends a launch notification email to a waitlist member.
+ *
+ * @async
+ * @param {string} email - The recipient's email address.
+ * @returns {Promise<Object>} A Promise that resolves with the email sending result data.
+ */
+export const sendWaitlistLaunchEmail = async (email) => {
+  const shopUrl = `https://${config.domainName}/boxes`;
+
+  return sendEmail({
+    to: email,
+    subject: "We're Live! Your Unbox The Moment Box Awaits",
+    text: `
+Great news! Unbox The Moment is now live!
+
+You signed up for our waitlist, and we're excited to let you know that you can now shop our curated surprise boxes.
+
+Visit ${shopUrl} to explore our collection and create your next unforgettable moment.
+
+Thank you for your patience and for being part of our community from the beginning!
+
+Best,
+The Unbox The Moment Team
+    `.trim(),
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We're Live!</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #faf8f5;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <table role="presentation" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #D4AF37 0%, #B8962E 100%); padding: 40px 40px; text-align: center;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">
+                We're Live!
+              </h1>
+              <p style="margin: 10px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 16px;">
+                Curated surprise boxes, designed for connection
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px;">
+              <p style="margin: 0 0 20px; color: #1a1a1a; font-size: 16px; line-height: 1.6;">
+                Great news! <strong>Unbox The Moment</strong> is now live!
+              </p>
+              
+              <p style="margin: 0 0 20px; color: #5c564d; font-size: 16px; line-height: 1.6;">
+                You signed up for our waitlist, and we're excited to let you know that you can now shop our curated surprise boxes.
+              </p>
+              
+              <p style="margin: 0 0 30px; color: #5c564d; font-size: 16px; line-height: 1.6;">
+                Explore our collection and create your next unforgettable moment with friends, family, or that special someone.
+              </p>
+              
+              <!-- CTA Button -->
+              <table role="presentation" style="width: 100%; margin: 0 0 30px;">
+                <tr>
+                  <td style="text-align: center;">
+                    <a href="${shopUrl}" style="display: inline-block; background-color: #D4AF37; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-weight: 600; font-size: 16px;">
+                      Shop Now
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin: 0; color: #5c564d; font-size: 16px; line-height: 1.6;">
+                Thank you for your patience and for being part of our community from the beginning!
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f5f0eb; padding: 30px 40px; text-align: center;">
+              <p style="margin: 0 0 10px; color: #1a1a1a; font-size: 16px; font-weight: 600;">
+                Unbox The Moment
+              </p>
+              <p style="margin: 0; color: #5c564d; font-size: 14px;">
+                Curated surprise boxes for meaningful connections
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `.trim(),
+  });
+};

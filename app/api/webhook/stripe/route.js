@@ -121,9 +121,9 @@ export async function POST(req) {
                 customerEmail,
                 shippingAddress,
               });
-              console.log("✅ Admin notification email sent successfully");
+              console.log("Admin notification email sent successfully");
             } catch (adminEmailError) {
-              console.error("❌ Failed to send admin notification email:", adminEmailError);
+              console.error("Failed to send admin notification email:", adminEmailError);
               // Don't throw - order is already created
             }
           }
@@ -230,7 +230,7 @@ Other Notes: ${order.preferences.otherNotes || "None"}`
       </head>
       <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
         <div style="text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #D4AF37, #F4D03F); padding: 20px; border-radius: 8px;">
-          <h1 style="color: #fff; font-size: 28px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">🎁 New Order Received!</h1>
+          <h1 style="color: #fff; font-size: 28px; margin: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">New Order Received!</h1>
         </div>
 
         <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
@@ -299,7 +299,7 @@ Other Notes: ${order.preferences.otherNotes || "None"}`
   `;
 
   const text = `
-🎁 NEW ORDER RECEIVED!
+NEW ORDER RECEIVED!
 
 Order #${orderNumber}
 Date: ${orderDate}
@@ -331,7 +331,7 @@ View in Admin Dashboard: http://localhost:3000/admin
 
   const result = await sendEmail({
     to: adminEmail,
-    subject: `🎁 New Order: ${product.name} - $${product.price}`,
+    subject: `New Order: ${product.name} - $${product.price}`,
     html,
     text,
   });

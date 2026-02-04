@@ -24,7 +24,6 @@ export default function OrdersTable({ orders }) {
   if (orders.length === 0) {
     return (
       <div className="p-8 text-center text-gray-500">
-        <div className="text-6xl mb-4">📦</div>
         <h3 className="text-lg font-medium mb-2">No orders yet</h3>
         <p>Orders will appear here when customers make purchases.</p>
       </div>

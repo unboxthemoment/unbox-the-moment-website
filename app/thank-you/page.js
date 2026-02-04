@@ -27,7 +27,7 @@ export default function ThankYouPage() {
                 />
               </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Thank You for Your Order! 🎉</h1>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Thank You for Your Order!</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               We&apos;re so excited to help you create an unforgettable moment!
             </p>
@@ -69,9 +69,7 @@ export default function ThankYouPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Shipping Notification</h3>
-                      <p className="text-gray-600">
-                        You&apos;ll get a tracking number when your box ships. Expect it in 3-5 business days!
-                      </p>
+                      <p className="text-gray-600">You&apos;ll receive an email when your box ships.</p>
                     </div>
                   </div>
                 </div>

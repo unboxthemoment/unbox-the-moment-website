@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import config from "@/config";
+import WaitlistSignup from "@/components/WaitlistSignup";
 
 // This component is used to create Stripe Checkout Sessions
 // It handles one-time payments only
 // It also passes product preferences (vegan, allergies, notes) to the checkout
+// When waitlist is active, shows WaitlistSignup instead of checkout button
 const ButtonCheckout = ({
   priceId,
   productId = null,
@@ -13,6 +16,17 @@ const ButtonCheckout = ({
   className = "btn btn-gold w-full",
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  // If waitlist is active, show waitlist signup instead
+  if (config.waitlist?.isActive) {
+    return (
+      <WaitlistSignup
+        buttonClassName={className}
+        showMessage={false}
+        compact={true}
+      />
+    );
+  }
 
   const handlePayment = async () => {
     setIsLoading(true);

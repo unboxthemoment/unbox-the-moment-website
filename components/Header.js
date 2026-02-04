@@ -13,25 +13,25 @@ const boxCategories = [
     href: "/boxes/couples",
     label: "Couple's Edition",
     description: "Romantic surprises for two",
-    icon: "💑",
+    icon: "",
   },
   {
     href: "/boxes/family",
     label: "Family Edition",
     description: "Fun for 2-5 people",
-    icon: "👨‍👩‍👧‍👦",
+    icon: "",
   },
   {
     href: "/boxes/girls-night",
     label: "Girls Night Edition",
     description: "Perfect for 2-5 friends",
-    icon: "👯‍♀️",
+    icon: "",
   },
   {
     href: "/boxes/self-care",
     label: "Self Care Edition",
     description: "Treat yourself",
-    icon: "🧘",
+    icon: "",
   },
 ];
 

@@ -83,13 +83,13 @@ const Footer = () => {
                   About us
                 </Link>
               </li>
-              {config.resend.supportEmail && (
+              {config.resend.customerServiceEmail && (
                 <li>
                   <a
-                    href={`mailto:${config.resend.supportEmail}`}
+                    href={`mailto:${config.resend.customerServiceEmail}`}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
-                    Contact
+                    Contact Us
                   </a>
                 </li>
               )}

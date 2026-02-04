@@ -112,7 +112,7 @@ export default function OrderDetails({ order, onClose }) {
             {/* Shipping Address */}
             {order.shipping_address && (
               <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-3">📦 Shipping Address</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">Shipping Address</h4>
                 <div className="text-gray-700">
                   {order.shipping_address.name && <div className="font-medium">{order.shipping_address.name}</div>}
                   {order.shipping_address.address && (
@@ -133,7 +133,7 @@ export default function OrderDetails({ order, onClose }) {
             {/* Preferences */}
             {order.preferences && Object.keys(order.preferences).length > 0 && (
               <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-3">🍽️ Customer Preferences</h4>
+                <h4 className="font-semibold text-gray-900 mb-3">Customer Preferences</h4>
                 <div className="space-y-2">
                   {order.preferences.vegan !== undefined && (
                     <div className="flex justify-between">
@@ -165,7 +165,7 @@ export default function OrderDetails({ order, onClose }) {
 
             {/* Fulfillment Checklist */}
             <div className="bg-green-50 p-4 rounded-lg border-l-4 border-green-400">
-              <h4 className="font-semibold text-green-900 mb-3">✅ Fulfillment Checklist</h4>
+              <h4 className="font-semibold text-green-900 mb-3">Fulfillment Checklist</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center">
                   <input

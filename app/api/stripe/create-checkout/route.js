@@ -1,9 +1,11 @@
 import { createCheckout } from "@/libs/stripe";
 import { createClient } from "@/libs/supabase/server";
 import { NextResponse } from "next/server";
+import config from "@/config";
 
 // Error messages for different failure scenarios
 const ERROR_MESSAGES = {
+  WAITLIST_ACTIVE: "We're not launched yet! Join our waitlist to be notified when we go live.",
   MISSING_PRICE_ID: "Unable to process your order. Please refresh the page and try again.",
   MISSING_URLS: "Unable to process your order. Please refresh the page and try again.",
   STRIPE_NOT_CONFIGURED: "Payment system is temporarily unavailable. Please try again later.",
@@ -48,6 +50,11 @@ export async function POST(req) {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request. Please try again.", code: "INVALID_REQUEST" }, { status: 400 });
+  }
+
+  // Check if waitlist is active - block checkout if so
+  if (config.waitlist?.isActive) {
+    return NextResponse.json({ error: ERROR_MESSAGES.WAITLIST_ACTIVE, code: "WAITLIST_ACTIVE" }, { status: 403 });
   }
 
   // Validate required fields

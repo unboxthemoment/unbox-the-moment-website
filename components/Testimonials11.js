@@ -92,7 +92,7 @@ const list = [
   {
     username: "imgyf",
     name: "Yifan Goh",
-    text: "It's a game changer  🚀 Comes with easy to follow tutorial, and saves you a ton of time. What's not to love?",
+    text: "It's a game changer. Comes with easy to follow tutorial, and saves you a ton of time. What's not to love?",
     type: refTypes.twitter,
     link: "https://twitter.com/imgyf/status/1697549891080532236?s=20",
   },
@@ -128,7 +128,7 @@ const list = [
   {
     username: "VicPivots",
     name: "Victor Abeledo",
-    text: "Marc, I got your boilerplate and having the payments setup with Stripe + user auth is a blessing. This will save me like a week of work for each new side project I spin up. I appreciate that is well documented, as well. 100% worth it 🚀🚀🚀",
+    text: "Marc, I got your boilerplate and having the payments setup with Stripe + user auth is a blessing. This will save me like a week of work for each new side project I spin up. I appreciate that is well documented, as well. 100% worth it",
     type: refTypes.twitter,
     link: "https://twitter.com/VicPivots/status/1697352442986250413?s=20",
   },
@@ -168,13 +168,9 @@ const Testimonial = ({ i }) => {
           </div>
           <div className="w-full flex items-end justify-between gap-2">
             <div>
-              <div className="text-sm font-medium text-base-content">
-                {testimonial.name}
-              </div>
+              <div className="text-sm font-medium text-base-content">{testimonial.name}</div>
               {testimonial.username && (
-                <div className="mt-0.5 text-sm text-base-content/80">
-                  @{testimonial.username}
-                </div>
+                <div className="mt-0.5 text-sm text-base-content/80">@{testimonial.username}</div>
               )}
             </div>
 
@@ -298,9 +294,7 @@ const VideoTestimonial = ({ i }) => {
 
             {!isPlaying && (
               <div className="animate-opacity text-right">
-                <p className="text-gray-50 font-medium drop-shadow">
-                  {testimonial.name}
-                </p>
+                <p className="text-gray-50 font-medium drop-shadow">{testimonial.name}</p>
                 <div className="rating">
                   {[...Array(5)].map((_, i) => (
                     <svg
@@ -333,7 +327,10 @@ const VideoTestimonial = ({ i }) => {
 
 const Testimonials11 = () => {
   return (
-    <section className="bg-base-200" id="testimonials">
+    <section
+      className="bg-base-200"
+      id="testimonials"
+    >
       <div className="py-24 px-8 max-w-7xl mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
           <div className="mb-8">
@@ -342,8 +339,7 @@ const Testimonials11 = () => {
             </h2>
           </div>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-base-content/80">
-            Don&apos;t take our word for it. Here&apos;s what they have to say
-            about {config.appName}.
+            Don&apos;t take our word for it. Here&apos;s what they have to say about {config.appName}.
           </p>
         </div>
 
@@ -352,9 +348,15 @@ const Testimonials11 = () => {
           className="grid max-w-2xl grid-cols-1 gap-6 mx-auto sm:gap-8 md:grid-cols-2 lg:max-w-none lg:grid-cols-4"
         >
           <li>
-            <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+            <ul
+              role="list"
+              className="flex flex-col gap-y-6 sm:gap-y-8"
+            >
               {[...Array(3)].map((e, i) => (
-                <Testimonial key={i} i={i} />
+                <Testimonial
+                  key={i}
+                  i={i}
+                />
               ))}
             </ul>
           </li>
@@ -365,9 +367,7 @@ const Testimonials11 = () => {
               <li>
                 <figure className="relative h-full p-6 bg-base-100 rounded-lg">
                   <blockquote className="relative p-4">
-                    <p className="text-lg font-medium text-base-content">
-                      {list[list.length - 1].text}
-                    </p>
+                    <p className="text-lg font-medium text-base-content">{list[list.length - 1].text}</p>
                   </blockquote>
                   <figcaption className="relative flex items-center justify-start gap-4 pt-4 mt-4 border-t border-base-content/5">
                     <div className="overflow-hidden rounded-full bg-base-300 shrink-0">
@@ -375,9 +375,7 @@ const Testimonials11 = () => {
                         <Image
                           className="w-12 h-12 rounded-full object-cover"
                           src={list[list.length - 1].img}
-                          alt={`${
-                            list[list.length - 1].name
-                          }'s testimonial for ${config.appName}`}
+                          alt={`${list[list.length - 1].name}'s testimonial for ${config.appName}`}
                           width={48}
                           height={48}
                         />
@@ -388,34 +386,48 @@ const Testimonials11 = () => {
                       )}
                     </div>
                     <div>
-                      <div className="text-base font-medium text-base-content">
-                        {list[list.length - 1].name}
-                      </div>
+                      <div className="text-base font-medium text-base-content">{list[list.length - 1].name}</div>
                       {list[list.length - 1].username && (
-                        <div className="mt-1 text-base text-base-content/80">
-                          @{list[list.length - 1].username}
-                        </div>
+                        <div className="mt-1 text-base text-base-content/80">@{list[list.length - 1].username}</div>
                       )}
                     </div>
                   </figcaption>
                 </figure>
               </li>
             </ul>
-            <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+            <ul
+              role="list"
+              className="flex flex-col gap-y-6 sm:gap-y-8"
+            >
               {[...Array(2)].map((e, i) => (
-                <Testimonial key={i} i={i + 3} />
+                <Testimonial
+                  key={i}
+                  i={i + 3}
+                />
               ))}
             </ul>
-            <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+            <ul
+              role="list"
+              className="flex flex-col gap-y-6 sm:gap-y-8"
+            >
               {[...Array(2)].map((e, i) => (
-                <Testimonial key={i} i={i + 5} />
+                <Testimonial
+                  key={i}
+                  i={i + 5}
+                />
               ))}
             </ul>
           </li>
           <li>
-            <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+            <ul
+              role="list"
+              className="flex flex-col gap-y-6 sm:gap-y-8"
+            >
               {[...Array(3)].map((e, i) => (
-                <Testimonial key={i} i={i + 7} />
+                <Testimonial
+                  key={i}
+                  i={i + 7}
+                />
               ))}
             </ul>
           </li>

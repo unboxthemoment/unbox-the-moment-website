@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import TrustBar from "@/components/TrustBar";
 import Testimonials3 from "@/components/Testimonials3";
 import HowItWorks from "@/components/HowItWorks";
+import WaitlistSignup from "@/components/WaitlistSignup";
 import config from "@/config";
 import { Suspense, useEffect, useRef, useState } from "react";
 
@@ -208,8 +209,7 @@ const faqs = [
   },
   {
     question: "How long does shipping take?",
-    answer:
-      "Your surprise box will arrive in 3-5 business days. We ship via USPS Priority Mail to ensure fast and reliable delivery.",
+    answer: "Your surprise box will ship soon after your order.",
   },
   {
     question: "Can I customize my box for dietary restrictions?",
@@ -243,28 +243,48 @@ export default function Page() {
           {/* Subtle glow effect */}
           <div className="hero-glow"></div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-32 w-full">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-28 lg:pt-36 pb-12 sm:pb-16 md:pb-20 lg:pb-32 w-full">
             <div className="max-w-3xl mx-auto text-center hero-content-wrapper">
               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 sm:mb-6 animate-fade-in-up px-2 hero-title">
-                Curated surprise boxes, <span className="font-serif italic hero-accent">designed for connection</span>
+                Curated surprise boxes,
+                <br className="block sm:hidden" />{" "}
+                <span className="font-serif italic hero-accent">designed for connection</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-[#5c564d] leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto animate-fade-in-up delay-200 px-4 relative z-10">
                 It&apos;s hard to plan fun things with friends. We help you build connections and rediscover the purpose
                 of seeing people.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up delay-300 px-4 relative z-10">
+              <div className="flex flex-row gap-2 sm:gap-4 justify-center animate-fade-in-up delay-300 px-4 relative z-10">
                 <Link
                   href="/boxes"
-                  className="btn btn-gold px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="btn btn-gold px-4 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-base flex-1 sm:flex-none sm:w-auto transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Shop boxes
                 </Link>
                 <Link
                   href="#how-it-works"
-                  className="btn btn-gold-outline px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base w-full sm:w-auto transform hover:scale-105 transition-all duration-300"
+                  className="btn btn-gold-outline px-4 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-base flex-1 sm:flex-none sm:w-auto transform hover:scale-105 transition-all duration-300"
                 >
                   How it works
                 </Link>
+              </div>
+
+              {/* Waitlist Signup Section */}
+              <div className="mt-16 sm:mt-24 md:mt-32 animate-fade-in-up delay-400 px-4 relative z-10 max-w-lg mx-auto w-full">
+                <div className="text-center mb-4 sm:mb-5">
+                  <h3 className="font-serif text-base sm:text-xl md:text-2xl text-[#1a1a1a] mb-2">
+                    Be the first to know
+                  </h3>
+                  <p className="text-xs sm:text-base text-[#5c564d] leading-relaxed">
+                    Join our waitlist to get early access and exclusive updates when we launch new collections.
+                  </p>
+                </div>
+                <WaitlistSignup
+                  className=""
+                  buttonClassName="btn btn-shimmer w-full px-4 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-base font-medium text-white relative z-10"
+                  showMessage={false}
+                  compact={true}
+                />
               </div>
             </div>
           </div>
@@ -337,7 +357,7 @@ export default function Page() {
                   </svg>
                 }
                 title="Fast delivery"
-                description="Your surprise box arrives in 3-5 business days, ready to create your next unforgettable moment."
+                description="Your surprise box ships soon after order, ready to create your next unforgettable moment."
               />
             </div>
           </div>
