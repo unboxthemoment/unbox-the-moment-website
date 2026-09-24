@@ -1,3 +1,12 @@
+// Launch switches:
+// - Waitlist mode (now): WAITLIST_ACTIVE = true. Checkout is hidden and visitors join the waitlist.
+// - Pre-order mode: set WAITLIST_ACTIVE = false and PREORDER_SHIP_DATE to the promised date (e.g. "March 15").
+//   Checkout turns on and buttons/messages say "Pre-order, ships by <date>".
+// - Normal selling: set WAITLIST_ACTIVE = false and PREORDER_SHIP_DATE = "".
+const WAITLIST_ACTIVE = true;
+const PREORDER_SHIP_DATE = "";
+const PREORDER_ACTIVE = !WAITLIST_ACTIVE && PREORDER_SHIP_DATE !== "";
+
 const config = {
   // REQUIRED
   appName: "Unbox The Moment",
@@ -363,6 +372,9 @@ const config = {
     // Gold - the primary accent color for Unbox The Moment
     main: "#D4AF37",
   },
+  // Only these accounts can open /admin (orders, waitlist) and call /api/admin routes.
+  // Sign in at /signin with one of these emails, then go to /admin.
+  adminEmails: ["unboxthemoment1@gmail.com"],
   auth: {
     // REQUIRED — the path to log in users. It's use to protect private routes (like /dashboard). It's used in apiClient (/libs/api.js) upon 401 errors from our API
     loginUrl: "/signin",
@@ -372,12 +384,19 @@ const config = {
   // Shipping information
   shipping: {
     estimatedDays: "3-5 business days",
-    message: "Surprise box ships soon after order",
+    message: PREORDER_ACTIVE
+      ? `Pre-order now, ships by ${PREORDER_SHIP_DATE}`
+      : "Surprise box ships soon after order",
+  },
+  // Pre-order mode (controlled by the launch switches at the top of this file)
+  preorder: {
+    isActive: PREORDER_ACTIVE,
+    shipDate: PREORDER_SHIP_DATE,
   },
   // Waitlist configuration - set isActive to false when ready to launch
   waitlist: {
-    // When true, checkout is disabled and waitlist signup is shown instead
-    isActive: true,
+    // When true, checkout is disabled and waitlist signup is shown instead (set via WAITLIST_ACTIVE at the top of this file)
+    isActive: WAITLIST_ACTIVE,
     // Message shown to users when waitlist is active
     launchMessage: "We're launching soon! Join our waitlist to be first in line.",
     // Success message after joining waitlist

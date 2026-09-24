@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import config from "@/config";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +70,11 @@ export default function ThankYouPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Shipping Notification</h3>
-                      <p className="text-gray-600">You&apos;ll receive an email when your box ships.</p>
+                      <p className="text-gray-600">
+                        {config.preorder?.isActive
+                          ? `This is a pre-order. Your box ships by ${config.preorder.shipDate}, and you'll receive an email when it's on its way.`
+                          : "You'll receive an email when your box ships."}
+                      </p>
                     </div>
                   </div>
                 </div>

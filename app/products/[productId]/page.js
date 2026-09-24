@@ -431,7 +431,7 @@ function ProductDetails({ productId }) {
                 {isLoading ? (
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
-                  <>Buy Now - ${product.price}</>
+                  <>{config.preorder?.isActive ? "Pre-order" : "Buy Now"} - ${product.price}</>
                 )}
               </button>
             )}

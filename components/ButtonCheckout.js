@@ -64,7 +64,7 @@ const ButtonCheckout = ({
   };
 
   // Determine button text
-  const displayText = buttonText || "Buy Now";
+  const displayText = buttonText || (config.preorder?.isActive ? "Pre-order" : "Buy Now");
 
   return (
     <button
