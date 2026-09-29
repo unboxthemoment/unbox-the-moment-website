@@ -1,11 +1,16 @@
 // Launch switches:
 // - Waitlist mode (now): WAITLIST_ACTIVE = true. Checkout is hidden and visitors join the waitlist.
-// - Pre-order mode: set WAITLIST_ACTIVE = false and PREORDER_SHIP_DATE to the promised date (e.g. "March 15").
-//   Checkout turns on and buttons/messages say "Pre-order, ships by <date>".
+// - Pre-order mode: set WAITLIST_ACTIVE = false and PREORDER_SHIP_DATE to the promised date (e.g. "March 15"),
+//   or "TBA" if there's no date yet. Checkout turns on and buttons/messages say "Pre-order, ships by <date>"
+//   (or "ship date to be announced" for TBA/TBD).
 // - Normal selling: set WAITLIST_ACTIVE = false and PREORDER_SHIP_DATE = "".
-const WAITLIST_ACTIVE = true;
-const PREORDER_SHIP_DATE = "";
+const WAITLIST_ACTIVE = false;
+const PREORDER_SHIP_DATE = "TBA";
 const PREORDER_ACTIVE = !WAITLIST_ACTIVE && PREORDER_SHIP_DATE !== "";
+// "ships by March 15", or "ship date to be announced" when the date is TBA/TBD
+const PREORDER_SHIPPING_TEXT = /^(TBA|TBD)$/i.test(PREORDER_SHIP_DATE.trim())
+  ? "ship date to be announced"
+  : `ships by ${PREORDER_SHIP_DATE}`;
 
 const config = {
   // REQUIRED
@@ -385,13 +390,14 @@ const config = {
   shipping: {
     estimatedDays: "3-5 business days",
     message: PREORDER_ACTIVE
-      ? `Pre-order now, ships by ${PREORDER_SHIP_DATE}`
+      ? `Pre-order now, ${PREORDER_SHIPPING_TEXT}`
       : "Surprise box ships soon after order",
   },
   // Pre-order mode (controlled by the launch switches at the top of this file)
   preorder: {
     isActive: PREORDER_ACTIVE,
     shipDate: PREORDER_SHIP_DATE,
+    shippingText: PREORDER_SHIPPING_TEXT,
   },
   // Waitlist configuration - set isActive to false when ready to launch
   waitlist: {

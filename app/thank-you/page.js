@@ -72,7 +72,7 @@ export default function ThankYouPage() {
                       <h3 className="font-semibold text-gray-900 mb-1">Shipping Notification</h3>
                       <p className="text-gray-600">
                         {config.preorder?.isActive
-                          ? `This is a pre-order. Your box ships by ${config.preorder.shipDate}, and you'll receive an email when it's on its way.`
+                          ? `This is a pre-order (${config.preorder.shippingText}). You'll receive an email when your box is on its way.`
                           : "You'll receive an email when your box ships."}
                       </p>
                     </div>
