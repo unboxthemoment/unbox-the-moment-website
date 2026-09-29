@@ -269,23 +269,25 @@ export default function Page() {
                 </Link>
               </div>
 
-              {/* Waitlist Signup Section */}
-              <div className="mt-16 sm:mt-24 md:mt-32 animate-fade-in-up delay-400 px-4 relative z-10 max-w-lg mx-auto w-full">
-                <div className="text-center mb-4 sm:mb-5">
-                  <h3 className="font-serif text-base sm:text-xl md:text-2xl text-[#1a1a1a] mb-2">
-                    Be the first to know
-                  </h3>
-                  <p className="text-xs sm:text-base text-[#5c564d] leading-relaxed">
-                    Join our waitlist to get early access and exclusive updates when we launch new collections.
-                  </p>
+              {/* Waitlist Signup Section - hidden once the waitlist is turned off (the /api/waitlist route rejects signups then) */}
+              {config.waitlist?.isActive && (
+                <div className="mt-16 sm:mt-24 md:mt-32 animate-fade-in-up delay-400 px-4 relative z-10 max-w-lg mx-auto w-full">
+                  <div className="text-center mb-4 sm:mb-5">
+                    <h3 className="font-serif text-base sm:text-xl md:text-2xl text-[#1a1a1a] mb-2">
+                      Be the first to know
+                    </h3>
+                    <p className="text-xs sm:text-base text-[#5c564d] leading-relaxed">
+                      Join our waitlist to get early access and exclusive updates when we launch new collections.
+                    </p>
+                  </div>
+                  <WaitlistSignup
+                    className=""
+                    buttonClassName="btn btn-shimmer w-full px-4 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-base font-medium text-white relative z-10"
+                    showMessage={false}
+                    compact={true}
+                  />
                 </div>
-                <WaitlistSignup
-                  className=""
-                  buttonClassName="btn btn-shimmer w-full px-4 sm:px-8 py-2.5 sm:py-3.5 text-xs sm:text-base font-medium text-white relative z-10"
-                  showMessage={false}
-                  compact={true}
-                />
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -357,7 +359,11 @@ export default function Page() {
                   </svg>
                 }
                 title="Fast delivery"
-                description="Your surprise box ships soon after order, ready to create your next unforgettable moment."
+                description={
+                  config.preorder?.isActive
+                    ? `Pre-order now and your surprise box ships by ${config.preorder.shipDate}, ready to create your next unforgettable moment.`
+                    : "Your surprise box ships soon after order, ready to create your next unforgettable moment."
+                }
               />
             </div>
           </div>

@@ -1,6 +1,8 @@
 // Trust badges and shipping info component - Hims-inspired style
 // Displays trust indicators to build customer confidence
 
+import config from "@/config";
+
 const TrustBar = ({ variant = "default" }) => {
   const trustItems = [
     {
@@ -41,7 +43,7 @@ const TrustBar = ({ variant = "default" }) => {
         </svg>
       ),
       title: "Fast delivery",
-      description: "Ships soon after order",
+      description: config.shipping.message,
     },
   ];
 
