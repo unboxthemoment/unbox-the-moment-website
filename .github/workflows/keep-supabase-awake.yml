@@ -1,0 +1,17 @@
+# Supabase pauses free-tier projects after ~7 days without database activity,
+# which breaks the waitlist form. This pings the live site's /api/waitlist
+# endpoint (which reads the waitlist count from Supabase) every 3 days so the
+# project stays active.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: "0 12 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping waitlist endpoint
+        run: curl --fail --silent --show-error --retry 3 --max-time 30 https://unboxthemoment.com/api/waitlist
