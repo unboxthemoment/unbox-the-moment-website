@@ -361,7 +361,7 @@ export default function Page() {
                 title="Fast delivery"
                 description={
                   config.preorder?.isActive
-                    ? `Pre-order now and your surprise box ships by ${config.preorder.shipDate}, ready to create your next unforgettable moment.`
+                    ? `Pre-order your surprise box now (${config.preorder.shippingText}), ready to create your next unforgettable moment.`
                     : "Your surprise box ships soon after order, ready to create your next unforgettable moment."
                 }
               />
